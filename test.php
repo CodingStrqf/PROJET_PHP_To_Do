@@ -13,3 +13,5 @@ $TTache=[
 ];
 
 require("Affichage.php");
+
+echo "Tout marche ici";
