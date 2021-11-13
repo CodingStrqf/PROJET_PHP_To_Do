@@ -13,7 +13,14 @@ class Tache
     }
 
     public function __toString(): string{
-        return "$this->contenu à faire pour le $this->date, est de niveau d'importance $this->importance";
+        $aRetourn = "Tache a faire : $this->contenu ".'<br>';
+        $aRetourn = $aRetourn."Pour le : $this->date ".'<br>';
+        $aRetourn = $aRetourn."Couleur : $this->importance ".'<br>'.'<br>';
+        return $aRetourn;
+    }
+
+    public function getCouleur(): string{
+        return $this->importance;
     }
 }
 ?>

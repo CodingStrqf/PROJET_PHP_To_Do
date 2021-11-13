@@ -1,5 +1,7 @@
 <?php
 
     foreach ($TTache as $value ){
-        echo $value->__toString().'<br>';
+        require('affichageDeTache.php');
+        //echo ;
     }
+
