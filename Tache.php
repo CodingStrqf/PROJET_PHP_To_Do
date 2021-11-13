@@ -22,5 +22,9 @@ class Tache
     public function getCouleur(): string{
         return $this->importance;
     }
+
+    public function getContenu(): string{
+        return $this->contenu;
+    }
 }
 ?>

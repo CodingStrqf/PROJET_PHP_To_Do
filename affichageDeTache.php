@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html lang="fr">
-<p>
-    <style>
-        p{
-            background-color: <?= $value->getCouleur(); ?>;
-        }
-    </style>
+<p style= "background:<?php echo $value->getCouleur(); ?>">
+
     <?php
         echo $value->__toString().'<br>';
     ?>
+
 </p>
 
