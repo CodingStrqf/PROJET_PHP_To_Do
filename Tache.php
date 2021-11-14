@@ -9,7 +9,16 @@ class Tache
     public function __construct(string $contenu, string $date, string $importance, int $estPublique){
         $this->contenu=$contenu;
         $this->date=$date;
-        $this->importance=$importance;
+
+        if($importance == 'rouge'){
+            $this->importance='#FF0000';
+        }else{
+            if ($importance == 'orange'){
+                $this->importance='#FFA600';
+            }else{
+                $this->importance='#00FF94';
+            }
+        }
         $this->estPublique=$estPublique;
     }
 
