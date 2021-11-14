@@ -1,7 +1,13 @@
 <!DOCTYPE html>
 <html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="test.css">
+</head>
+
 <h1> To Do List</h1>
 <body>
+<span  class="corp">
 
 <form action="AjoutTache.php" method="post">
 <p>
@@ -23,7 +29,7 @@
 </form>
 
 
-
+<article>
 <?php
 require("Tache.php");
 
@@ -41,5 +47,7 @@ require("Affichage.php");
 echo "Tout marche ici";
 require("AjoutTache.php");
 ?>
+</article>
+</span>
 </body>
 </html>
