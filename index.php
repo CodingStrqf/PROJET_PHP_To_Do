@@ -5,6 +5,10 @@
     <link rel="stylesheet" type="text/css" href="test.css">
 </head>
 
+<?php
+//appel au contôleur
+?>
+
 <h1> To Do List</h1>
 <body>
 <span  class="corp">
@@ -22,7 +26,7 @@
     </label>
 
     <label for="import">
-        Importance : <input type="text" name="import">  <br>
+        Importance : <input type="text" name="import">  <br> <br>
     </label>
     <button>Accept</button>
 </p>

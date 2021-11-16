@@ -4,7 +4,7 @@ class Tache
     private string $contenu;
     private string $date;
     private string $importance;                   //Rouge: Très important Orange: Moyennement important Vert: Pas inportant
-    private int $estPublique;                  // pour que les visiteurs le voit ou pas
+    private int $estPublique;                     // pour que les visiteurs le voit ou pas
 
     public function __construct(string $contenu, string $date, string $importance, int $estPublique){
         $this->contenu=$contenu;
@@ -25,7 +25,7 @@ class Tache
     public function __toString(): string{
         $aRetourn = "Tache a faire : $this->contenu ".'<br>';
         $aRetourn = $aRetourn."Pour le : $this->date ".'<br>';
-        //$aRetourn = $aRetourn."Couleur : $this->importance ".'<br>';
+        $aRetourn = $aRetourn."Couleur : $this->importance ".'<br>';
         $aRetourn = $aRetourn."est public ? : $this->estPublique".'<br>'.'<br>';
         return $aRetourn;
     }
