@@ -21,7 +21,7 @@ class Compte
     }
 
     public function getConnexion(): int{
-        return $this->$connecter;
+        return $this->connecter;
     }
 
     public function connexion(string $pseudo, string $motPasse, $tab): int{

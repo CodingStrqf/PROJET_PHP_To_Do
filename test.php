@@ -24,7 +24,7 @@
     <label for="import">
         Importance : <input type="text" name="import">  <br>
     </label>
-
+    <button>Accept</button>
 </p>
 </form>
 
@@ -44,7 +44,7 @@ $TTache=[
     "3"=>$t3
 ];
 require("Affichage.php");
-echo "Tout marche ici";
+
 require("AjoutTache.php");
 ?>
 </article>

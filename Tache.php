@@ -25,7 +25,7 @@ class Tache
     public function __toString(): string{
         $aRetourn = "Tache a faire : $this->contenu ".'<br>';
         $aRetourn = $aRetourn."Pour le : $this->date ".'<br>';
-        $aRetourn = $aRetourn."Couleur : $this->importance ".'<br>';
+        //$aRetourn = $aRetourn."Couleur : $this->importance ".'<br>';
         $aRetourn = $aRetourn."est public ? : $this->estPublique".'<br>'.'<br>';
         return $aRetourn;
     }
