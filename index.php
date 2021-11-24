@@ -35,7 +35,7 @@
 
 <article>
 <?php
-require("Tache.php");
+require_once("modeles/Tache.php");
 
 
 $t1 = new Tache("Faire dodo","14/11/2021","rouge",1);
@@ -47,9 +47,9 @@ $TTache=[
     "2"=>$t2,
     "3"=>$t3
 ];
-require("Affichage.php");
+require("vues/Affichage.php");
 
-require("AjoutTache.php");
+require("controller/AjoutTache.php");
 ?>
 </article>
 </span>
