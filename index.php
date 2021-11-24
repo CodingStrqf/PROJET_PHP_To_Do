@@ -37,10 +37,9 @@
 <?php
 require_once("modeles/Tache.php");
 
-
-$t1 = new Tache("Faire dodo","14/11/2021","rouge",1);
-$t2 = new Tache("Jouer à Valorant","14/11/2021","orange",1);
-$t3 = new Tache("dire bonjour à Léo","14/11/2021","vert",0);
+$t1 = new Tache("Faire dodo","14/11/2021","3",1);
+$t2 = new Tache("Jouer à Valorant","14/11/2021","2",1);
+$t3 = new Tache("dire bonjour à Léo","14/11/2021","1",0);
 
 $TTache=[
     "1"=>$t1,
@@ -49,7 +48,34 @@ $TTache=[
 ];
 require("vues/Affichage.php");
 
-require("controller/AjoutTache.php");
+// ************************* Base de donnée ********************************* //
+
+require("Connection.php");
+require("TacheGateway.php");
+
+$dsn = 'mysql:host=localhost;dbname=projet_php_to_do';
+$user = 'addenonfou';
+$password = 'Adrien.202';
+$ad = new PDO($dsn, $user, $password);
+
+$id = 0;
+$contenu = 'Faire la base de donnée';
+$date='2021-11-17';
+$importance='3';
+$isPublic=1;
+
+
+$gateway = new TacheGateway(new Connection($dsn, $user, $password));
+// Insert a new record
+$id = $gateway->insert($id,$contenu,$date,$importance,$isPublic);
+// Update it
+//$b->update($id, ’titre2’) ou $b->update($book)
+// Delete it
+//$b->delete($id);
+
+
+
+
 ?>
 </article>
 </span>
