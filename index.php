@@ -13,7 +13,7 @@
 <body>
 <span  class="corp">
 
-<form action="AjoutTache.php" method="post">
+<form action="controller/AjoutTache.php" method="post">
 <p>
     <h2> Ajouter tache </h2>
 
@@ -26,7 +26,16 @@
     </label>
 
     <label for="import">
-        Importance : <input type="text" name="import">  <br> <br>
+        Importance : <select name="import">
+            <option value="3">Important</option>
+            <option value="2">Moyennement important</option>
+            <option value="1">Pas important</option>
+        </select>
+        <br>
+    </label>
+
+    <label for="isPub">
+        Rendre privé : <input type="checkbox" name="isPub"> <br>
     </label>
     <button>Accept</button>
 </p>
@@ -77,7 +86,7 @@ $isPublic=1;
 $gateway->delete(21);
 
 // ************************* Suppression ********************************* //
-
+/*
 $idTache = 18;
 $contenu = 'Acheter des mouchoires';
 $date='26/08/2020';
@@ -85,7 +94,7 @@ $importance='3';
 $isPublic=0;
 
 //$gateway->update($idTache, $contenu, $date, $importance, $isPublic);
-
+*/
 // ************************* Affichage ********************************* //
 
 $TTache=$gateway->afficherTout();
