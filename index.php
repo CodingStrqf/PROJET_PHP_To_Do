@@ -52,27 +52,24 @@ require("vues/Affichage.php");
 
 require("Connection.php");
 require("TacheGateway.php");
+require("config/config.php");
 
-$dsn = 'mysql:host=localhost;dbname=projet_php_to_do';
-$user = 'addenonfou';
-$password = 'Adrien.202';
-$ad = new PDO($dsn, $user, $password);
-$gateway = new TacheGateway(new Connection($dsn, $user, $password));
+$gateway = new TacheGateway(new Connection($dns, $user, $mdp));
 
 // ************************* Ajout ********************************* //
 
 $id = 0;
-$contenu = 'Faire la base de donnée';
-$date='2021-11-17';
-$importance='3';
-$isPublic=3;
+$contenu = 'Aller me moucher';
+$date='2021-11-25';
+$importance='2';
+$isPublic=1;
 
 
-//$id = $gateway->insert($id,$contenu,$date,$importance,$isPublic);
+//$gateway->insert($id,$contenu,$date,$importance,$isPublic);
 
 // ************************* Suppression ********************************* //
 
-//$gateway->delete(1);
+$gateway->delete(17);
 
 // ************************* Affichage ********************************* //
 
