@@ -48,15 +48,6 @@ require_once("modeles/Tache.php");
 
 // ************************* Exemples de tache ********************************* //
 
-$t1 = new Tache(0,"Faire dodo","14/11/2021","3",1);
-$t2 = new Tache(0,"Jouer à Valorant","14/11/2021","2",1);
-$t3 = new Tache(0,"dire bonjour à Léo","14/11/2021","1",0);
-
-$TTache=[
-    "1"=>$t1,
-    "2"=>$t2,
-    "3"=>$t3
-];
 require("vues/Affichage.php");
 
 // ************************* Base de donnée ********************************* //

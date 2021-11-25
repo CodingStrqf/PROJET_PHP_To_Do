@@ -11,9 +11,9 @@ $rep=__DIR__.'/../';
 
 //BD
 
-$base="sasa";
-$login="";
-$mdp="";
+$dns="mysql:host=localhost;dbname=projet_php_to_do";
+$user="Leo";
+$mdp="1";
 
 //Vues
 
