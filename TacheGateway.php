@@ -35,10 +35,9 @@ class TacheGateway
     }
     public function afficherTout()
     {
-        $query='SELECT * FROM Tache';
+        $query='SELECT idTache,contenu,date,importance,isPublic FROM Tache';
 
         $this->con->executeQuery($query, array());
-        $toutesTaches=array();
         $resultats=$this->con->getResults();
         Foreach($resultats as $row){
             $toutesTaches[] = new Tache($row['idTache'], $row['contenu'], $row['date'], $row['importance'], $row['isPublic']);

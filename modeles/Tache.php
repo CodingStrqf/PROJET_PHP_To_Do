@@ -7,7 +7,7 @@ class Tache
     private string $importance;                   //Rouge: Très important Orange: Moyennement important Vert: Pas inportant
     private int $isPublic;                     // pour que les visiteurs le voit ou pas
 
-    public function __construct(string $contenu, string $date, string $importance, int $isPublic){
+    public function __construct(int $idTache, string $contenu, string $date, string $importance, int $isPublic){
         $this->idTache=0;     //Auto increment idTache grâce à PHPMyAdmin
         $this->contenu=$contenu;
         $this->date=$date;

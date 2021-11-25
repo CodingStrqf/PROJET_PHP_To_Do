@@ -37,9 +37,9 @@
 <?php
 require_once("modeles/Tache.php");
 
-$t1 = new Tache("Faire dodo","14/11/2021","3",1);
-$t2 = new Tache("Jouer à Valorant","14/11/2021","2",1);
-$t3 = new Tache("dire bonjour à Léo","14/11/2021","1",0);
+$t1 = new Tache(0,"Faire dodo","14/11/2021","3",1);
+$t2 = new Tache(0,"Jouer à Valorant","14/11/2021","2",1);
+$t3 = new Tache(0,"dire bonjour à Léo","14/11/2021","1",0);
 
 $TTache=[
     "1"=>$t1,
@@ -65,11 +65,11 @@ $importance='2';
 $isPublic=1;
 
 
-//$gateway->insert($id,$contenu,$date,$importance,$isPublic);
+$gateway->insert($id,$contenu,$date,$importance,$isPublic);
 
 // ************************* Suppression ********************************* //
 
-$gateway->delete(17);
+//$gateway->delete(17);
 
 // ************************* Affichage ********************************* //
 
