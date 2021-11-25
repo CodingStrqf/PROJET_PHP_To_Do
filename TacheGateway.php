@@ -23,11 +23,20 @@ class TacheGateway
     }
     public function update(int $idTache, string $contenu, string $date, string $importance, int $isPublic)
     {
+        $query ='UPDATE Tache SET contenu=:contenu AND date=:date AND importance=:importance AND isPublic=:isPublic WHERE idTache=:id';
 
+            $this->con->executeQuery($query, array(
+                ':id' => array($idTache, PDO::PARAM_INT),
+                ':contenu' => array($contenu, PDO::PARAM_STR),
+                ':date'=> array($date,PDO::PARAM_STR),
+                ':importance'=> array($importance,PDO::PARAM_STR),
+                ':isPublic'=> array($isPublic,PDO::PARAM_INT)
+            ));
     }
     public function delete(int $idTache)
     {
         $query='DELETE FROM Tache WHERE idTache = :idTache';
+
 
         $this->con->executeQuery($query, array(
             ':idTache'=> array($idTache,PDO::PARAM_INT),
@@ -37,6 +46,7 @@ class TacheGateway
     {
         $query='SELECT idTache,contenu,date,importance,isPublic FROM Tache';
 
+        $toutesTaches=array();
         $this->con->executeQuery($query, array());
         $resultats=$this->con->getResults();
         Foreach($resultats as $row){

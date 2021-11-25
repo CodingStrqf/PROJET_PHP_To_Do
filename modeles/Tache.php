@@ -8,7 +8,7 @@ class Tache
     private int $isPublic;                     // pour que les visiteurs le voit ou pas
 
     public function __construct(int $idTache, string $contenu, string $date, string $importance, int $isPublic){
-        $this->idTache=0;     //Auto increment idTache grâce à PHPMyAdmin
+        $this->idTache=$idTache;     //Auto increment idTache grâce à PHPMyAdmin
         $this->contenu=$contenu;
         $this->date=$date;
 
@@ -27,6 +27,7 @@ class Tache
     public function __toString(): string{
         $aRetourn = "Tache a faire : $this->contenu ".'<br>';
         $aRetourn = $aRetourn."Pour le : $this->date ".'<br>';
+        $aRetourn = $aRetourn."Identifiant : $this->idTache ".'<br>';
         $aRetourn = $aRetourn."Importance : $this->importance ".'<br>';
         $aRetourn = $aRetourn."est public ? : $this->isPublic".'<br>'.'<br>';
         return $aRetourn;
