@@ -28,7 +28,6 @@ class Tache
         $aRetourn = "Tache a faire : $this->contenu ".'<br>';
         $aRetourn = $aRetourn."Pour le : $this->date ".'<br>';
         $aRetourn = $aRetourn."Importance : $this->importance ".'<br>';
-        $aRetourn = $aRetourn."Id : $this->idTache ".'<br>';
         $aRetourn = $aRetourn."est public ? : $this->isPublic".'<br>'.'<br>';
         return $aRetourn;
     }

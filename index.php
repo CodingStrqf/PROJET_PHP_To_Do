@@ -57,25 +57,27 @@ $dsn = 'mysql:host=localhost;dbname=projet_php_to_do';
 $user = 'addenonfou';
 $password = 'Adrien.202';
 $ad = new PDO($dsn, $user, $password);
+$gateway = new TacheGateway(new Connection($dsn, $user, $password));
+
+// ************************* Ajout ********************************* //
 
 $id = 0;
 $contenu = 'Faire la base de donnée';
 $date='2021-11-17';
 $importance='3';
-$isPublic=1;
+$isPublic=3;
 
 
-$gateway = new TacheGateway(new Connection($dsn, $user, $password));
-// Insert a new record
-$id = $gateway->insert($id,$contenu,$date,$importance,$isPublic);
-// Update it
-//$b->update($id, ’titre2’) ou $b->update($book)
-// Delete it
-//$b->delete($id);
+//$id = $gateway->insert($id,$contenu,$date,$importance,$isPublic);
 
+// ************************* Suppression ********************************* //
 
+//$gateway->delete(1);
 
+// ************************* Affichage ********************************* //
 
+$TTache=$gateway->afficherTout();
+require("vues/Affichage.php");
 ?>
 </article>
 </span>
