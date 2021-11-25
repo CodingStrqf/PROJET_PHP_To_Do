@@ -12,7 +12,7 @@ class TacheGateway
     public function insert(int $idTache, string $contenu, string $date, string $importance, int $isPublic)
     {
         $query='INSERT INTO Tache VALUES(:idTache, :contenu, :date, :importance, :isPublic)';
-
+        $date = date_create_from_format("d/m/Y", $date)->format("Y/m/d");
         $this->con->executeQuery($query, array(
                                         ':idTache'=> array($idTache,PDO::PARAM_INT),
                                         ':contenu'=> array($contenu,PDO::PARAM_STR),
@@ -23,8 +23,8 @@ class TacheGateway
     }
     public function update(int $idTache, string $contenu, string $date, string $importance, int $isPublic)
     {
-        $query ='UPDATE Tache SET contenu=:contenu AND date=:date AND importance=:importance AND isPublic=:isPublic WHERE idTache=:id';
-
+        $query ='UPDATE Tache SET contenu=:contenu, date=:date, importance=:importance, isPublic=:isPublic WHERE idTache=:id';
+        $date = date_create_from_format("d/m/Y", $date)->format("Y/m/d");
             $this->con->executeQuery($query, array(
                 ':id' => array($idTache, PDO::PARAM_INT),
                 ':contenu' => array($contenu, PDO::PARAM_STR),

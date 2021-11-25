@@ -56,21 +56,17 @@ require("Connection.php");
 require("TacheGateway.php");
 require("config/config.php");
 
-try {
-    $con = new Connection($dns, $user, $mdp);
-}
-catch(PDOException $e1){
-    echo $e1->getMessage();
-}
+$con = new Connection($dns, $user, $mdp);
+
 
 $gateway = new TacheGateway($con);
 
 // ************************* Ajout ********************************* //
 
 $idTache = 0;
-$contenu = 'Aller me moucher';
-$date='2021-11-25';
-$importance='2';
+$contenu = 'aller dehors';
+$date='25/11/2021';
+$importance='1';
 $isPublic=1;
 
 
@@ -78,17 +74,17 @@ $isPublic=1;
 
 // ************************* Suppression ********************************* //
 
-//$gateway->delete(16);
+$gateway->delete(21);
 
 // ************************* Suppression ********************************* //
 
 $idTache = 18;
-$contenu = 'Acheter des mouchoir';
-$date='2021-11-25';
+$contenu = 'Acheter des mouchoires';
+$date='26/08/2020';
 $importance='3';
 $isPublic=0;
 
-$gateway->update($idTache, $contenu, $date, $importance, $isPublic);
+//$gateway->update($idTache, $contenu, $date, $importance, $isPublic);
 
 // ************************* Affichage ********************************* //
 
