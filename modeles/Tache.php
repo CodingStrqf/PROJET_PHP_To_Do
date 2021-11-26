@@ -33,6 +33,10 @@ class Tache
         return $aRetourn;
     }
 
+    public function getIdTache(): string{
+        return $this->idTache;
+    }
+
     public function getCouleur(): string{
         return $this->importance;
     }

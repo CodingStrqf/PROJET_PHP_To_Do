@@ -5,8 +5,9 @@
     <?php
         echo $value->__toString().'<br>';
     ?>
-<button>
-    Delete
-</button>
+    <form action="controller/delete.php" method="post">
+        <input type="submit" value="delete" >
+        <input type="hidden" name="delete" value=<?php echo $value->getIdTache() ?>>
+    </form>
 </p>
 
