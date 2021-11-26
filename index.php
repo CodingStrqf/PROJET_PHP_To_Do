@@ -9,6 +9,13 @@
 //appel au contôleur
 $dVueEreur=[];     //Initialisation du tableau d'erreur
 ?>
+<?php
+if($co = $_GET['estConnecter']){
+    echo 'connecte';
+}else{
+    echo 'pas connecte';
+}
+?>
 
 <h1> To Do List</h1>
 <body>
@@ -45,6 +52,7 @@ $dVueEreur=[];     //Initialisation du tableau d'erreur
     Question pour le prof:
     -Savoir comment faire un insert uddate delete sans recréer une gateway
     -Comment recuperer idTache d'une tache avec un bouton pour delete
+
 <article>
 <?php
 require_once("modeles/Tache.php");
@@ -95,7 +103,7 @@ $isPublic=0;
 */
 // ************************* Affichage ********************************* //
 
-$TTache=$gateway->afficherTout();
+$TTache=$gateway->afficherTout($co);
 require("vues/Affichage.php");
 ?>
 </article>

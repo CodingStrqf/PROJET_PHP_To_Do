@@ -55,21 +55,38 @@ class TacheGateway
         }
         require("vues/erreur.php");
     }
-    public function afficherTout()
+    public function afficherTout(int $co)
     {
-        $query='SELECT idTache,contenu,date,importance,isPublic FROM Tache';
+        if($co == 1) {
+            $query = 'SELECT idTache,contenu,date,importance,isPublic FROM Tache';
 
-        $toutesTaches=array();
-        try {
-            $this->con->executeQuery($query, array());
-            $resultats = $this->con->getResults();
-            foreach ($resultats as $row) {
-                $toutesTaches[] = new Tache($row['idTache'], $row['contenu'], $row['date'], $row['importance'], $row['isPublic']);
+            $toutesTaches = array();
+            try {
+                $this->con->executeQuery($query, array());
+                $resultats = $this->con->getResults();
+                foreach ($resultats as $row) {
+                    $toutesTaches[] = new Tache($row['idTache'], $row['contenu'], $row['date'], $row['importance'], $row['isPublic']);
+                }
+            } catch (PDOException $e5) {
+                $dVueEreur[] = $e5->getMessage();
             }
-        }catch(PDOException $e5){
-            $dVueEreur[]=$e5->getMessage();
+            require("vues/erreur.php");
+            return $toutesTaches;
+        }else{
+            $query = 'SELECT idTache,contenu,date,importance,isPublic FROM Tache WHERE isPublic = 1 ';
+
+            $toutesTaches = array();
+            try {
+                $this->con->executeQuery($query, array());
+                $resultats = $this->con->getResults();
+                foreach ($resultats as $row) {
+                    $toutesTaches[] = new Tache($row['idTache'], $row['contenu'], $row['date'], $row['importance'], $row['isPublic']);
+                }
+            } catch (PDOException $e5) {
+                $dVueEreur[] = $e5->getMessage();
+            }
+            require("vues/erreur.php");
+            return $toutesTaches;
         }
-        require("vues/erreur.php");
-        return $toutesTaches;
     }
 }
