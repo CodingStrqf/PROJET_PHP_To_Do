@@ -13,45 +13,63 @@ class TacheGateway
     {
         $query='INSERT INTO Tache VALUES(:idTache, :contenu, :date, :importance, :isPublic)';
         $date = date_create_from_format("d/m/Y", $date)->format("Y/m/d");
-        $this->con->executeQuery($query, array(
-                                        ':idTache'=> array($idTache,PDO::PARAM_INT),
-                                        ':contenu'=> array($contenu,PDO::PARAM_STR),
-                                        ':date'=> array($date,PDO::PARAM_STR),
-                                        ':importance'=> array($importance,PDO::PARAM_STR),
-                                        ':isPublic'=> array($isPublic,PDO::PARAM_INT)
-        ));
+        try {
+            $this->con->executeQuery($query, array(
+                ':idTache' => array($idTache, PDO::PARAM_INT),
+                ':contenu' => array($contenu, PDO::PARAM_STR),
+                ':date' => array($date, PDO::PARAM_STR),
+                ':importance' => array($importance, PDO::PARAM_STR),
+                ':isPublic' => array($isPublic, PDO::PARAM_INT)
+            ));
+        }catch(PDOException $e2){
+            $dVueEreur[]=$e2->getMessage();
+        }
+        require("vues/erreur.php");
     }
     public function update(int $idTache, string $contenu, string $date, string $importance, int $isPublic)
     {
         $query ='UPDATE Tache SET contenu=:contenu, date=:date, importance=:importance, isPublic=:isPublic WHERE idTache=:id';
         $date = date_create_from_format("d/m/Y", $date)->format("Y/m/d");
+        try {
             $this->con->executeQuery($query, array(
                 ':id' => array($idTache, PDO::PARAM_INT),
                 ':contenu' => array($contenu, PDO::PARAM_STR),
-                ':date'=> array($date,PDO::PARAM_STR),
-                ':importance'=> array($importance,PDO::PARAM_STR),
-                ':isPublic'=> array($isPublic,PDO::PARAM_INT)
+                ':date' => array($date, PDO::PARAM_STR),
+                ':importance' => array($importance, PDO::PARAM_STR),
+                ':isPublic' => array($isPublic, PDO::PARAM_INT)
             ));
+        }catch(PDOException $e3){
+            $dVueEreur[]=$e3->getMessage();
+        }
+        require("vues/erreur.php");
     }
     public function delete(int $idTache)
     {
         $query='DELETE FROM Tache WHERE idTache = :idTache';
-
-
-        $this->con->executeQuery($query, array(
-            ':idTache'=> array($idTache,PDO::PARAM_INT),
-        ));
+        try {
+            $this->con->executeQuery($query, array(
+                ':idTache' => array($idTache, PDO::PARAM_INT),
+            ));
+        }catch(PDOException $e4){
+            $dVueEreur[]=$e4->getMessage();
+        }
+        require("vues/erreur.php");
     }
     public function afficherTout()
     {
         $query='SELECT idTache,contenu,date,importance,isPublic FROM Tache';
 
         $toutesTaches=array();
-        $this->con->executeQuery($query, array());
-        $resultats=$this->con->getResults();
-        Foreach($resultats as $row){
-            $toutesTaches[] = new Tache($row['idTache'], $row['contenu'], $row['date'], $row['importance'], $row['isPublic']);
+        try {
+            $this->con->executeQuery($query, array());
+            $resultats = $this->con->getResults();
+            foreach ($resultats as $row) {
+                $toutesTaches[] = new Tache($row['idTache'], $row['contenu'], $row['date'], $row['importance'], $row['isPublic']);
+            }
+        }catch(PDOException $e5){
+            $dVueEreur[]=$e5->getMessage();
         }
+        require("vues/erreur.php");
         return $toutesTaches;
     }
 }

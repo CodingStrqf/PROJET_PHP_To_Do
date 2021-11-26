@@ -7,6 +7,7 @@
 
 <?php
 //appel au contôleur
+$dVueEreur=[];     //Initialisation du tableau d'erreur
 ?>
 
 <h1> To Do List</h1>
@@ -35,7 +36,7 @@
     </label>
 
     <label for="isPub">
-        Rendre privé : <input type="checkbox" name="isPub"> <br>
+        Rendre privé : <input type="checkbox" name="isPub"> <br><br>
     </label>
     <button>Accept</button>
 </p>
@@ -55,8 +56,12 @@ require("vues/Affichage.php");
 require("Connection.php");
 require("TacheGateway.php");
 require("config/config.php");
-
-$con = new Connection($dns, $user, $mdp);
+try{
+    $con = new Connection($dns, $user, $mdp);
+}catch(PDOException $e1){
+    $dVueEreur[]=$e1->getMessage();
+}
+require("vues/erreur.php");
 
 
 $gateway = new TacheGateway($con);
@@ -74,7 +79,7 @@ $isPublic=1;
 
 // ************************* Suppression ********************************* //
 
-$gateway->delete(21);
+//$gateway->delete(21);
 
 // ************************* Suppression ********************************* //
 /*

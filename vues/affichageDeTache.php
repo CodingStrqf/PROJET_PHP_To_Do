@@ -5,6 +5,8 @@
     <?php
         echo $value->__toString().'<br>';
     ?>
-
+<button>
+    Delete
+</button>
 </p>
 

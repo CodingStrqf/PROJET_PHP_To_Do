@@ -24,10 +24,10 @@ $importance=filter_var($import, FILTER_SANITIZE_STRING);
 //connection
 try {
     $con = new Connection($dns, $user, $mdp);
+} catch(PDOException $e5){
+    $dVueEreur[]=$e5->getMessage();
 }
-catch(PDOException $e1){
-    echo $e1->getMessage();
-}
+require("../vues/erreur.php");
 
 $gateway = new TacheGateway($con);
 //insertion
