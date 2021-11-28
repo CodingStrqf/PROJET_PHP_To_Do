@@ -49,9 +49,6 @@ if($co = $_GET['estConnecter']){
 </p>
 </form>
 
-    Question pour le prof:
-    -Savoir comment faire un insert uddate delete sans recréer une gateway
-    -Comment recuperer idTache d'une tache avec un bouton pour delete
 
 <article>
 <?php

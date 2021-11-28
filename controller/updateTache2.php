@@ -6,6 +6,7 @@ require("../config/config.php");
 
 //traitement
 
+$idTache=$_POST['idTache'];
 $tache= $_POST['tache'] ?? 'pasdetache';
 $date= $_POST['date'] ?? '';
 $import= $_POST['import'] ?? '';
@@ -14,7 +15,7 @@ if(empty($_POST['isPub'])){
 }else{
     $isPublic = 0;
 }
-$idTache = 0;
+
 
 //filter_var nettoyage
 $contenu=filter_var($tache, FILTER_SANITIZE_STRING);
@@ -31,9 +32,8 @@ require("../vues/erreur.php");
 
 $gateway = new TacheGateway($con);
 //insertion
-$gateway->insert($idTache,$contenu,$date,$importance,$isPublic);
+$gateway->update($idTache,$contenu,$date,$importance,$isPublic);
 
 
 header('Location:../index.php');
 ?>
-

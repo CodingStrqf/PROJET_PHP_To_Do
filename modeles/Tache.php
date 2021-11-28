@@ -44,5 +44,17 @@ class Tache
     public function getContenu(): string{
         return $this->contenu;
     }
+
+    public function getImportance(): string{
+        return $this->contenu;
+    }
+
+    public function getDate(): string{
+        return $this->contenu;
+    }
+
+    public function getIsPublic(): string{
+        return $this->contenu;
+    }
 }
 ?>

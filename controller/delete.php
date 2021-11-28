@@ -19,5 +19,5 @@ $gateway = new TacheGateway($con);
 //insertion
 $gateway->delete($idTache);
 
+header('Location:../index.php');
 ?>
-<meta http-equiv="refresh" content="1; url=<?php echo $_SERVER["HTTP_REFERER"]  ; ?>" />

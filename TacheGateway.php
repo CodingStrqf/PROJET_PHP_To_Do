@@ -9,6 +9,7 @@ class TacheGateway
     }
 
     //méthodes qui font appel à la classe Connection
+
     public function insert(int $idTache, string $contenu, string $date, string $importance, int $isPublic)
     {
         $query='INSERT INTO Tache VALUES(:idTache, :contenu, :date, :importance, :isPublic)';
@@ -26,6 +27,7 @@ class TacheGateway
         }
         require("vues/erreur.php");
     }
+
     public function update(int $idTache, string $contenu, string $date, string $importance, int $isPublic)
     {
         $query ='UPDATE Tache SET contenu=:contenu, date=:date, importance=:importance, isPublic=:isPublic WHERE idTache=:id';
@@ -43,18 +45,20 @@ class TacheGateway
         }
         require("vues/erreur.php");
     }
+
     public function delete(int $idTache)
     {
         $query='DELETE FROM Tache WHERE idTache = :idTache';
         try {
             $this->con->executeQuery($query, array(
-                ':idTache' => array($idTache, PDO::PARAM_INT),
+                ':idTache' => array($idTache, PDO::PARAM_INT)
             ));
         }catch(PDOException $e4){
             $dVueEreur[]=$e4->getMessage();
         }
         require("vues/erreur.php");
     }
+
     public function afficherTout(int $co)
     {
         if($co == 1) {
@@ -89,4 +93,22 @@ class TacheGateway
             return $toutesTaches;
         }
     }
+
+    public function finfByIdTache(int $IdTache)
+    {
+        $query = 'SELECT idTache,contenu,date,importance,isPublic FROM Tache WHERE idTache=:idTache';
+
+        $toutesTaches = array();
+        try {
+            $this->con->executeQuery($query, array(
+                ':idTache' => array($idTache, PDO::PARAM_INT)
+            ));
+            $tab = $this->con->getResults();
+        } catch (PDOException $e5) {
+            $dVueEreur[] = $e5->getMessage();
+        }
+        require("vues/erreur.php");
+        return $tab;
+    }
+
 }
