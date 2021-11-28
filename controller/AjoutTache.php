@@ -5,6 +5,7 @@ require("../TacheGateway.php");
 require("../config/config.php");
 
 //traitement
+$connect=$_POST['estConnecte'];
 
 $tache= $_POST['tache'] ?? 'pasdetache';
 $date= $_POST['date'] ?? '';
@@ -34,6 +35,6 @@ $gateway = new TacheGateway($con);
 $gateway->insert($idTache,$contenu,$date,$importance,$isPublic);
 
 
-header('Location:../index.php');
+header('Location:../index.php?estConnecte='.$connect);
 ?>
 

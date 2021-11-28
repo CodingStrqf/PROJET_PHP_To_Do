@@ -10,8 +10,8 @@ $idTache= $_POST['delete'];
 //connection
 try {
     $con = new Connection($dns, $user, $mdp);
-} catch(PDOException $e6){
-    $dVueEreur[]=$e6->getMessage();
+} catch(PDOException $e){
+    $dVueEreur[]=$e->getMessage();
 }
 require("../vues/erreur.php");
 

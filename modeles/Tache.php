@@ -45,16 +45,12 @@ class Tache
         return $this->contenu;
     }
 
-    public function getImportance(): string{
-        return $this->contenu;
-    }
-
     public function getDate(): string{
-        return $this->contenu;
+        return $this->date;
     }
 
     public function getIsPublic(): string{
-        return $this->contenu;
+        return $this->isPublic;
     }
 }
 ?>

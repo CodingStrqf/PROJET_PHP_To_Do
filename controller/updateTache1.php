@@ -12,8 +12,8 @@ $idTache= $_POST['update'];
 //connection
 try {
     $con = new Connection($dns, $user, $mdp);
-} catch(PDOException $e5){
-    $dVueEreur[]=$e5->getMessage();
+} catch(PDOException $e){
+    $dVueEreur[]=$e->getMessage();
 }
 require("../vues/erreur.php");
 
@@ -25,23 +25,25 @@ foreach ($tab as $row) {
     $tache = new Tache($row['idTache'], $row['contenu'], $row['date'], $row['importance'], $row['isPublic']);
 }
 
+echo $tache->getDate();
+$date = date_create_from_format("Y-m-d", $tache->getDate())->format("d/m/Y");
+
 $IdTache=$tache->getIdTache();
 $contenu=$tache->getContenu();
-$importance=$tache->getImportance();
-$date=$tache->getDate();
+$importance=$tache->getCouleur();
 $isPublic=$tache->getIsPublic();
 
 ?>
-<form action="controller/updateTache2.php" method="post">
+<form action="updateTache2.php" method="post">
     <p>
     <h2> Modifier une tache </h2>
 
     <label for="tache" >
-        Tache : <input type="text" name="tache" value="<?php echo $contenu ?>"> <br>
+        Tache : <input type="text" name="tache" value="<?php echo $contenu ?>"> <br><br>
     </label>
 
     <label for="date" >
-        Date : <input type="text" name="date" value="<?php echo $date ?>"> <br>
+        Date : <input type="text" name="date" value="<?php echo $date ?>"> <br><br>
     </label>
 
     <label for="import">
@@ -50,11 +52,11 @@ $isPublic=$tache->getIsPublic();
             <option value="2" <?php echo ($importance == '#FFA600') ? 'selected' : '' ?> >Moyennement important</option>
             <option value="1" <?php echo ($importance == '#00FF94') ? 'selected' : '' ?> >Pas important</option>
         </select>
-        <br>
+        <br><br>
     </label>
 
     <label for="isPub">
-        Rendre privé : <input type="checkbox" name="isPub" <?php echo ($importance == '0') ? 'checked="checked"' : '' ?> > <br><br>
+        Rendre privé : <input type="checkbox" name="isPub" <?php echo ($isPublic == '0') ? 'checked="checked"' : '' ?> > <br><br><br>
     </label>
     <button>Accept</button>
     <input type="hidden" name="idTache" value="<?php echo $IdTache ?>">

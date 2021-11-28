@@ -22,16 +22,17 @@ $contenu=filter_var($tache, FILTER_SANITIZE_STRING);
 $date=filter_var($date, FILTER_SANITIZE_STRING);
 $importance=filter_var($import, FILTER_SANITIZE_STRING);
 
+
 //connection
 try {
     $con = new Connection($dns, $user, $mdp);
-} catch(PDOException $e5){
-    $dVueEreur[]=$e5->getMessage();
+} catch(PDOException $e){
+    $dVueEreur[]=$e->getMessage();
 }
 require("../vues/erreur.php");
 
 $gateway = new TacheGateway($con);
-//insertion
+
 $gateway->update($idTache,$contenu,$date,$importance,$isPublic);
 
 

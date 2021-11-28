@@ -10,7 +10,7 @@
 $dVueEreur=[];     //Initialisation du tableau d'erreur
 ?>
 <?php
-if($co = $_GET['estConnecter']){
+if($co = $_GET['estConnecte']){
     echo 'connecte';
 }else{
     echo 'pas connecte';
@@ -45,7 +45,8 @@ if($co = $_GET['estConnecter']){
     <label for="isPub">
         Rendre privé : <input type="checkbox" name="isPub"> <br><br>
     </label>
-    <button>Accept</button>
+    <input type="submit" value="Accept" >
+    <input type="hidden" name="update" value="<?php echo $co ?>">
 </p>
 </form>
 

@@ -35,16 +35,16 @@ if(isset($_POST['envoyer'])) {
     $exist = $gateway->rechercheUtil($id,$mdp);
 
     if($exist) {
-        $estConnecter = 1;
-        header('Location:../index.php?estConnecter='.$estConnecter);
+        $estConnecte = 1;
+        header('Location:../index.php?estConnecte='.$estConnecte);
     }else{
         echo 'problème de login ou de mdp';
     }
 
 }
 if(isset($_POST['pasCo'])){
-    $estConnecter = 0;
-    header('Location:../index.php?estConnecter='.$estConnecter);
+    $estConnecte = 0;
+    header('Location:../index.php?estConnecte='.$estConnecte);
 }
     ?>
 

@@ -94,18 +94,17 @@ class TacheGateway
         }
     }
 
-    public function finfByIdTache(int $IdTache)
+    public function findByIdTache(int $idTache)
     {
         $query = 'SELECT idTache,contenu,date,importance,isPublic FROM Tache WHERE idTache=:idTache';
 
-        $toutesTaches = array();
         try {
             $this->con->executeQuery($query, array(
                 ':idTache' => array($idTache, PDO::PARAM_INT)
             ));
             $tab = $this->con->getResults();
-        } catch (PDOException $e5) {
-            $dVueEreur[] = $e5->getMessage();
+        } catch (PDOException $e) {
+            $dVueEreur[] = $e->getMessage();
         }
         require("vues/erreur.php");
         return $tab;
