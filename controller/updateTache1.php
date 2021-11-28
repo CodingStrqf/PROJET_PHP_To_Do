@@ -8,6 +8,7 @@ require("../config/config.php");
 
 
 $idTache= $_POST['update'];
+$connect=$_POST['estConnecte'];
 
 //connection
 try {
@@ -55,10 +56,24 @@ $isPublic=$tache->getIsPublic();
         <br><br>
     </label>
 
-    <label for="isPub">
-        Rendre privé : <input type="checkbox" name="isPub" <?php echo ($isPublic == '0') ? 'checked="checked"' : '' ?> > <br><br><br>
-    </label>
+    <?php
+
+    if ($connect == '0'){
+        echo '
+            <label for="isPub">
+                Rendre privé : vous n\'etes pas connecte, vous ne pouvez pas faire ca <br><br>
+                <input type="hidden" name="estConnecte" value="0" >
+            </label>';
+    }else{?>
+            <label for="isPub">
+                Rendre privé : <input type="checkbox" name="isPub" <?php echo ($isPublic == 0) ? 'checked="checked"' : '' ?> > <br><br>
+            </label>
+    <?php
+    }
+    ?>
+
     <button>Accept</button>
     <input type="hidden" name="idTache" value="<?php echo $IdTache ?>">
+    <input type="hidden" name="estConnecte" value="<?php echo $connect ?>">
     </p>
 </form>

@@ -9,13 +9,18 @@
 //appel au contôleur
 $dVueEreur=[];     //Initialisation du tableau d'erreur
 ?>
+<form method="post">
 <?php
 if($co = $_GET['estConnecte']){
-    echo 'connecte';
+    echo 'vous etes connecte';
+     ?><input type="submit" name="ecranCo" value="deconnection"><?php
 }else{
-    echo 'pas connecte';
+    echo 'vous etes invité';
+    ?><input type="submit" name="ecranCo" value="connection"><?php
 }
 ?>
+</form>
+
 
 <h1> To Do List</h1>
 <body>
@@ -42,11 +47,24 @@ if($co = $_GET['estConnecte']){
         <br>
     </label>
 
-    <label for="isPub">
-        Rendre privé : <input type="checkbox" name="isPub"> <br><br>
-    </label>
+     <?php
+
+        if ($co == '0'){
+            echo '
+            <label for="isPub">
+                Rendre privé : vous n\'etes pas connecte, vous ne pouvez pas faire ca <br><br>
+                <input type="hidden" name="isPub" value="" >
+            </label>';
+        }else{
+            echo '
+            <label for="isPub">
+                Rendre privé : <input type="checkbox" name="isPub" > <br><br>
+            </label>';
+        }
+     ?>
+
     <input type="submit" value="Accept" >
-    <input type="hidden" name="update" value="<?php echo $co ?>">
+    <input type="hidden" name="estConnecte" value="<?php echo $co ?>">
 </p>
 </form>
 
@@ -108,3 +126,8 @@ require("vues/Affichage.php");
 </span>
 </body>
 </html>
+<?php
+    if(isset($_POST['ecranCo'])){
+        header('Location:../PROJET_PHP_To_Do/vues/AffichageConnection.php');
+    }
+?>

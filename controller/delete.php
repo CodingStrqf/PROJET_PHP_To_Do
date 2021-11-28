@@ -5,7 +5,7 @@ require("../TacheGateway.php");
 require("../config/config.php");
 
 $idTache= $_POST['delete'];
-
+$connect=$_POST['estConnecte'];
 
 //connection
 try {
@@ -19,5 +19,5 @@ $gateway = new TacheGateway($con);
 //insertion
 $gateway->delete($idTache);
 
-header('Location:../index.php');
+header('Location:../index.php?estConnecte='.$connect);
 ?>

@@ -10,6 +10,7 @@ $connect=$_POST['estConnecte'];
 $tache= $_POST['tache'] ?? 'pasdetache';
 $date= $_POST['date'] ?? '';
 $import= $_POST['import'] ?? '';
+
 if(empty($_POST['isPub'])){
     $isPublic = 1;
 }else{
