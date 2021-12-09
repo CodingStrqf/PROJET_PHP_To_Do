@@ -6,15 +6,15 @@ class Tache
     private string $date;
     private string $importance;                   //Rouge: Très important Orange: Moyennement important Vert: Pas inportant
     private int $isPublic;                     // pour que les visiteurs le voit ou pas
-    private string $liste;
+    private string $idListe;
 
-    public function __construct(int $idTache, string $contenu, string $date, string $importance, int $isPublic, string $liste){
+    public function __construct(int $idTache, string $contenu, string $date, string $importance, int $isPublic, string $idListe){
         $this->idTache=$idTache;     //Auto increment idTache grâce à PHPMyAdmin
         $this->contenu=$contenu;
         $this->date=$date;
         $this->importance=$importance;
         $this->isPublic=$isPublic;
-        $this->liste = $liste;
+        $this->idListe = $idListe;
     }
 
     public function __toString(): string{
@@ -23,7 +23,7 @@ class Tache
         $aRetourn = $aRetourn."Identifiant : $this->idTache ".'<br>';
         $aRetourn = $aRetourn."Importance : $this->importance ".'<br>';
         $aRetourn = $aRetourn."est public ? : $this->isPublic".'<br>';
-        $aRetourn = $aRetourn."Liste : $this->liste".'<br>'.'<br>';
+        $aRetourn = $aRetourn."Liste : $this->idListe".'<br>'.'<br>';
         return $aRetourn;
     }
 
@@ -47,8 +47,8 @@ class Tache
         return $this->isPublic;
     }
 
-    public function getListe(): string{
-        return $this->liste;
+    public function getIdListe(): string{
+        return $this->idListe;
     }
 }
 ?>

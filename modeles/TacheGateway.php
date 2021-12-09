@@ -1,4 +1,5 @@
 <?php
+require_once ('ListeTache.php');
 class TacheGateway
 {
     private $con;
@@ -26,12 +27,12 @@ class TacheGateway
         }catch(PDOException $e2){
             $dVueEreur[]=$e2->getMessage();
         }
-        require($rep.$vues['erreur']);
+        require('../vues/erreur.php');
     }
 
-    public function update(int $idTache, string $contenu, string $date, string $importance, int $isPublic)
+    public function update(int $idTache, string $contenu, string $date, string $importance, int $isPublic, string $idListe)
     {
-        $query ='UPDATE Tache SET contenu=:contenu, date=:date, importance=:importance, isPublic=:isPublic WHERE idTache=:id';
+        $query ='UPDATE Tache SET contenu=:contenu, date=:date, importance=:importance, isPublic=:isPublic, idListe=:idListe WHERE idTache=:id';
         $date = date_create_from_format("d/m/Y", $date)->format("Y/m/d");
         try {
             $this->con->executeQuery($query, array(
@@ -39,12 +40,13 @@ class TacheGateway
                 ':contenu' => array($contenu, PDO::PARAM_STR),
                 ':date' => array($date, PDO::PARAM_STR),
                 ':importance' => array($importance, PDO::PARAM_STR),
-                ':isPublic' => array($isPublic, PDO::PARAM_INT)
+                ':isPublic' => array($isPublic, PDO::PARAM_INT),
+                ':idListe' => array($idListe, PDO::PARAM_STR)
             ));
         }catch(PDOException $e){
             $dVueEreur[]=$e->getMessage();
         }
-        require($rep.$vues['erreur']);
+        require('../vues/erreur.php');
     }
 
     public function delete(int $idTache)
@@ -57,19 +59,22 @@ class TacheGateway
         }catch(PDOException $e){
             $dVueEreur[]=$e->getMessage();
         }
-        require($rep.$vues['erreur']);
+        require('../vues/erreur.php');
     }
 
 
     public function RecupeIdListUtil(string $idUtilisateur)
     {
-        $query = 'SELECT idList FROM ListeTache WHERE idUtilisateur = :idUtilisateur';
+        $query = 'SELECT DISTINCT idList,nom,idUtilisateur FROM ListeTache WHERE idUtilisateur = :idUtilisateur';
 
         try {
             $this->con->executeQuery($query, array(
                 ':idUtilisateur' => array($idUtilisateur, PDO::PARAM_STR)
             ));
             $tab = $this->con->getResults();
+            foreach ($tab as $row) {
+                $toutesListeTache[] = new ListeTache($row['nom'],$row['idUtilisateur']);
+            }
         } catch (PDOException $e) {
             $dVueEreur[] = $e->getMessage();
         }
@@ -79,18 +84,21 @@ class TacheGateway
 
     public function RecupeTache(string $idList)
     {
-        $query = 'SELECT idTache,contenu,date,importance,isPublic FROM Tache WHERE idListe = :idListe';
-
+        $query = 'SELECT idTache,contenu,date,importance,isPublic FROM Tache WHERE idListe = :idList';
+        $tab = array();
         try {
             $this->con->executeQuery($query, array(
                 ':idList' => array($idList, PDO::PARAM_STR)
             ));
             $tab = $this->con->getResults();
+            foreach ($tab as $row) {
+                $toutesTaches[] = new Tache($row['idTache'], $row['contenu'], $row['date'], $row['importance'], $row['isPublic'], $idList);
+            }
         } catch (PDOException $e) {
             $dVueEreur[] = $e->getMessage();
         }
-        require($rep.$vues['erreur']);
-        return $tab;
+        require('vues/erreur.php');
+        return $toutesTaches;
     }
 
 
@@ -99,11 +107,12 @@ class TacheGateway
         if($co == 1) {
             $tabList = $this->RecupeIdListUtil($idCompte);
 
-            $tabTache = array();
+
             foreach ($tabList as $idList){
-                $tabTache = $this->RecupeTache($idList);
+                $tabTache = $this->RecupeTache($idList[0]);
             }
             return $tabTache;
+
         }else{
             $query = 'SELECT idTache,contenu,date,importance,isPublic FROM Tache WHERE isPublic = 1 ';
 
@@ -117,14 +126,14 @@ class TacheGateway
             } catch (PDOException $e) {
                 $dVueEreur[] = $e->getMessage();
             }
-            require($rep.$vues['erreur']);
+            require('vues/erreur.php');
             return $toutesTaches;
         }
     }
 
     public function findByIdTache(int $idTache)
     {
-        $query = 'SELECT idTache,contenu,date,importance,isPublic FROM Tache WHERE idTache=:idTache';
+        $query = 'SELECT idTache,contenu,date,importance,isPublic,idListe FROM Tache WHERE idTache=:idTache';
 
         try {
             $this->con->executeQuery($query, array(
@@ -134,7 +143,7 @@ class TacheGateway
         } catch (PDOException $e) {
             $dVueEreur[] = $e->getMessage();
         }
-        require($rep.$vues['erreur']);
+        require('../vues/erreur.php');
         return $tab;
     }
 }

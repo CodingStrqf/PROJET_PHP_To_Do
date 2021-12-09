@@ -6,19 +6,20 @@ class ListeTache
 {
     private string $idListe;
     private string $nom;
-    private Tache $taches;
+    private array $taches;
+    private string $idUtilisateur;
 
-    public function __construct(Compte $c, string $s)
+    public function __construct(string $nom, string $idUtilisateur)
     {
-        $this->idListe = $c->pseudo+$s;
-        $this->c = $c;
-        $this->nom = $s;
+        $this->idListe = $idUtilisateur.$nom;
+        $this->idUtilisateur = $idUtilisateur;
+        $this->nom = $nom;
         $this->taches = array();
     }
 
-    public function add(Tache $t){
-        $this->taches = $t
-        array_push($this->listeTache,$t);
-    }
+//    public function add(Tache $t){
+//        $this->taches = $t
+//        array_push($this->listeTache,$t);
+//    }
 
 }

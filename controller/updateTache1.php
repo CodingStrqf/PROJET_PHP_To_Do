@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <?php
-require_once('modeles/Tache.php');
+require_once('../modeles/Tache.php');
 
 
 
@@ -9,11 +9,28 @@ $idTache= $_POST['update'];
 $connect=$_POST['estConnecte'];
 
 
+// ** Base de donnée ** //
+
+require("../modeles/Connection.php");
+require("../modeles/TacheGateway.php");
+require("../config/config.php");
+try{
+    $con = new Connection($dns, $user, $mdp);
+}catch(PDOException $e1){
+    $dVueEreur[]=$e1->getMessage();
+}
+require("../vues/erreur.php");
+
+
+$gateway = new TacheGateway($con);
+
 
 //insertion
+
 $tab=$gateway->findByIdTache($idTache);
+
 foreach ($tab as $row) {
-    $tache = new Tache($row['idTache'], $row['contenu'], $row['date'], $row['importance'], $row['isPublic']);
+    $tache = new Tache($row['idTache'], $row['contenu'], $row['date'], $row['importance'], $row['isPublic'], $row['idListe']);
 }
 
 $date = date_create_from_format("Y-m-d", $tache->getDate())->format("d/m/Y");
@@ -22,6 +39,7 @@ $IdTache=$tache->getIdTache();
 $contenu=$tache->getContenu();
 $importance=$tache->getCouleur();
 $isPublic=$tache->getIsPublic();
+$idList=$tache->getIdListe();
 
 ?>
 <form action="updateTache2.php" method="post">
@@ -43,6 +61,14 @@ $isPublic=$tache->getIsPublic();
             <option value="#00FF94" <?php echo ($importance == '#00FF94') ? 'selected' : '' ?> >Pas important</option>
         </select>
         <br><br>
+    </label>
+
+    <label for="liste">
+        Liste : <select name="liste">
+            <option value="leoLoisir">leoLoisir</option>
+            <option value="adrienLoisir">adrienLoisir</option>
+        </select>
+        <br>
     </label>
 
     <?php

@@ -126,7 +126,8 @@ $isPublic=0;
 
 // ** Affichage * //
 
-$TTache=$gateway->afficherTout($co, "adrien");
+$TTache=$gateway->afficherTout($co, 'adrien');
+
 require("vues/Affichage.php");
 ?>
 </article>
