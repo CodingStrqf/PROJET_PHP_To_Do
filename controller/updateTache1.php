@@ -26,7 +26,6 @@ foreach ($tab as $row) {
     $tache = new Tache($row['idTache'], $row['contenu'], $row['date'], $row['importance'], $row['isPublic']);
 }
 
-echo $tache->getDate();
 $date = date_create_from_format("Y-m-d", $tache->getDate())->format("d/m/Y");
 
 $IdTache=$tache->getIdTache();

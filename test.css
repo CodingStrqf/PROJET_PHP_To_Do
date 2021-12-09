@@ -18,3 +18,7 @@ article{
 	flex-direction: column;
 	justify-content: space-around;
 }
+
+.taches{
+	border: 3px black;
+}

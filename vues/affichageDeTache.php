@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="fr">
-<p style= "background:<?php echo $value->getCouleur(); ?>">
+<link rel="stylesheet" type="text/css" href="test.css">
+
+<p class="taches" style= "background:<?php echo $value->getCouleur(); ?>">
 
     <?php
         echo $value->__toString().'<br>';

@@ -7,6 +7,7 @@ require("../config/config.php");
 //traitement
 $connect=$_POST['estConnecte'];
 
+$liste= $_POST['liste'];
 $tache= $_POST['tache'] ?? 'pasdetache';
 $date= $_POST['date'] ?? '';
 $import= $_POST['import'] ?? '';
@@ -33,7 +34,7 @@ require("../vues/erreur.php");
 
 $gateway = new TacheGateway($con);
 //insertion
-$gateway->insert($idTache,$contenu,$date,$importance,$isPublic);
+$gateway->insert($idTache,$contenu,$date,$importance,$isPublic,$liste);
 
 
 header('Location:../index.php?estConnecte='.$connect);

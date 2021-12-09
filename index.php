@@ -44,6 +44,13 @@ if($co = $_GET['estConnecte']){
             <option value="2">Moyennement important</option>
             <option value="1">Pas important</option>
         </select>
+    </label>
+
+    <label for="liste">
+        Liste : <select name="liste">
+            <option value="leoLoisir">leoLoisir</option>
+            <option value="adrienLoisir">adrienLoisir</option>
+        </select>
         <br>
     </label>
 

@@ -1,15 +1,16 @@
 <?php
-
+require_once ("ListeTache.php");
 class Compte
 {
     private string $pseudo;
     private string $motPasse;
-    private static int $connecter = 0;
+    private ListeTache $listeTaches;
 
     public function __construct(string $pseudo, string $motPasse)
     {
         $this->pseudo=$pseudo;
         $this->motPasse=$motPasse;
+        $this->listeTaches = array();
     }
 
     public function getPseudo(): string{
