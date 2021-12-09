@@ -73,7 +73,7 @@ class TacheGateway
         } catch (PDOException $e) {
             $dVueEreur[] = $e->getMessage();
         }
-        require($rep.$vues['erreur']);
+        require('vues/erreur.php');
         return $tab;
     }
 
@@ -97,12 +97,11 @@ class TacheGateway
     public function afficherTout(int $co, string $idCompte)
     {
         if($co == 1) {
-            $tabList = array();
-            $tabList = RecupeIdListUtil($idCompte);
+            $tabList = $this->RecupeIdListUtil($idCompte);
 
             $tabTache = array();
             foreach ($tabList as $idList){
-                $tabTache = RecupeTache($idList);
+                $tabTache = $this->RecupeTache($idList);
             }
             return $tabTache;
         }else{
