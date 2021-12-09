@@ -12,16 +12,7 @@ class Tache
         $this->idTache=$idTache;     //Auto increment idTache grâce à PHPMyAdmin
         $this->contenu=$contenu;
         $this->date=$date;
-
-        if($importance == '3'){
-            $this->importance='#FF0000';
-        }else{
-            if ($importance == '2'){
-                $this->importance='#FFA600';
-            }else{
-                $this->importance='#00FF94';
-            }
-        }
+        $this->importance=$importance;
         $this->isPublic=$isPublic;
         $this->liste = $liste;
     }

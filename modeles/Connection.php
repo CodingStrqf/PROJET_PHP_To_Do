@@ -10,7 +10,7 @@ public function __construct(string $dsn, string $username, string $password) {
 } 
  
 
-/** * @param string $query 
+/** * @param string $query
        * @param array $parameters * 
        * @return bool Returns `true` on success, `false` otherwise 
 */ 

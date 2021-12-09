@@ -1,8 +1,6 @@
 <?php
-require_once("../modeles/Tache.php");
-require("../Connection.php");
-require("../TacheGateway.php");
-require("../config/config.php");
+require_once('modeles/Tache.php');
+
 
 //traitement
 $connect=$_POST['estConnecte'];
@@ -24,15 +22,7 @@ $date=filter_var($date, FILTER_SANITIZE_STRING);
 $importance=filter_var($import, FILTER_SANITIZE_STRING);
 
 
-//connection
-try {
-    $con = new Connection($dns, $user, $mdp);
-} catch(PDOException $e){
-    $dVueEreur[]=$e->getMessage();
-}
-require("../vues/erreur.php");
 
-$gateway = new TacheGateway($con);
 
 $gateway->update($idTache,$contenu,$date,$importance,$isPublic);
 

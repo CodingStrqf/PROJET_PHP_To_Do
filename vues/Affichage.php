@@ -2,7 +2,7 @@
 if (!empty($TTache)){
 
     foreach ($TTache as $value ){
-        require('affichageDeTache.php');
+        require('../vues/affichageDeTache.php');
     }
 }
 

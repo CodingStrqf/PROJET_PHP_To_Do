@@ -15,7 +15,7 @@ if($co = $_GET['estConnecte']){
     echo 'vous etes connecte';
      ?><input type="submit" name="ecranCo" value="deconnection"><?php
 }else{
-    echo 'vous etes invité';
+    echo 'vous etes visiteur';
     ?><input type="submit" name="ecranCo" value="connection"><?php
 }
 ?>
@@ -40,9 +40,9 @@ if($co = $_GET['estConnecte']){
 
     <label for="import">
         Importance : <select name="import">
-            <option value="3">Important</option>
-            <option value="2">Moyennement important</option>
-            <option value="1">Pas important</option>
+            <option value="#FF0000">Important</option>
+            <option value="#FFA600">Moyennement important</option>
+            <option value="#00FF94">Pas important</option>
         </select>
     </label>
 
@@ -80,14 +80,14 @@ if($co = $_GET['estConnecte']){
 <?php
 require_once("modeles/Tache.php");
 
-// ************************* Exemples de tache ********************************* //
+// ** Exemples de tache ** //
 
 require("vues/Affichage.php");
 
-// ************************* Base de donnée ********************************* //
+// ** Base de donnée ** //
 
-require("Connection.php");
-require("TacheGateway.php");
+require("modeles/Connection.php");
+require("modeles/TacheGateway.php");
 require("config/config.php");
 try{
     $con = new Connection($dns, $user, $mdp);
@@ -99,7 +99,7 @@ require("vues/erreur.php");
 
 $gateway = new TacheGateway($con);
 
-// ************************* Ajout ********************************* //
+// ** Ajout ** //
 
 $idTache = 0;
 $contenu = 'aller dehors';
@@ -110,12 +110,12 @@ $isPublic=1;
 
 //$gateway->insert($idTache,$contenu,$date,$importance,$isPublic);
 
-// ************************* Suppression ********************************* //
+// ** Suppression ** //
 
 //$gateway->delete(21);
 
-// ************************* Suppression ********************************* //
-/*
+// ** Suppression ** //
+
 $idTache = 18;
 $contenu = 'Acheter des mouchoires';
 $date='26/08/2020';
@@ -123,10 +123,10 @@ $importance='3';
 $isPublic=0;
 
 //$gateway->update($idTache, $contenu, $date, $importance, $isPublic);
-*/
-// ************************* Affichage ********************************* //
 
-$TTache=$gateway->afficherTout($co);
+// ** Affichage * //
+
+$TTache=$gateway->afficherTout($co, "adrien");
 require("vues/Affichage.php");
 ?>
 </article>

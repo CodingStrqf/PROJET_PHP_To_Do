@@ -1,24 +1,14 @@
 <!DOCTYPE html>
 <html lang="fr">
 <?php
-require_once("../modeles/Tache.php");
-require("../Connection.php");
-require("../TacheGateway.php");
-require("../config/config.php");
+require_once('modeles/Tache.php');
+
 
 
 $idTache= $_POST['update'];
 $connect=$_POST['estConnecte'];
 
-//connection
-try {
-    $con = new Connection($dns, $user, $mdp);
-} catch(PDOException $e){
-    $dVueEreur[]=$e->getMessage();
-}
-require("../vues/erreur.php");
 
-$gateway = new TacheGateway($con);
 
 //insertion
 $tab=$gateway->findByIdTache($idTache);
@@ -48,9 +38,9 @@ $isPublic=$tache->getIsPublic();
 
     <label for="import">
         Importance : <select name="import">
-            <option value="3" <?php echo ($importance == '#FF0000') ? 'selected' : '' ?>>Important</option>
-            <option value="2" <?php echo ($importance == '#FFA600') ? 'selected' : '' ?> >Moyennement important</option>
-            <option value="1" <?php echo ($importance == '#00FF94') ? 'selected' : '' ?> >Pas important</option>
+            <option value="#FF0000" <?php echo ($importance == '#FF0000') ? 'selected' : '' ?>>Important</option>
+            <option value="#FFA600" <?php echo ($importance == '#FFA600') ? 'selected' : '' ?> >Moyennement important</option>
+            <option value="#00FF94" <?php echo ($importance == '#00FF94') ? 'selected' : '' ?> >Pas important</option>
         </select>
         <br><br>
     </label>

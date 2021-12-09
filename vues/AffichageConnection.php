@@ -13,10 +13,10 @@
 </form>
 
 <?php
-require("../Connection.php");
-require("../TacheGateway.php");
+require("../modeles/Connection.php");
+require("../modeles/TacheGateway.php");
 require("../config/config.php");
-require_once ("../ConnectionGateway.php");
+require_once ("../modeles/ConnectionGateway.php");
 
 try{
     $con = new Connection($dns, $user, $mdp);
@@ -46,7 +46,7 @@ if(isset($_POST['pasCo'])){
     $estConnecte = 0;
     header('Location:../index.php?estConnecte='.$estConnecte);
 }
-    ?>
+?>
 
 </body>
 </html>
