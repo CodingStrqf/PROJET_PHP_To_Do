@@ -113,7 +113,7 @@ class TacheGateway
             }
             return $tabTache;
 
-        }else{
+        }else{ 
             $query = 'SELECT idTache,contenu,date,importance,isPublic FROM Tache WHERE isPublic = 1 ';
 
             $toutesTaches = array();
