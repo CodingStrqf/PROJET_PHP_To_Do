@@ -54,6 +54,10 @@ if($co = $_GET['estConnecte']){
         <br>
     </label>
 
+    <label for="newList" >
+        Nouvelle liste : <input type="text" name="newList"> <br>
+    </label>
+
      <?php
 
         if ($co == '0'){
@@ -98,31 +102,6 @@ require("vues/erreur.php");
 
 
 $gateway = new TacheGateway($con);
-
-// ** Ajout ** //
-
-$idTache = 0;
-$contenu = 'aller dehors';
-$date='25/11/2021';
-$importance='1';
-$isPublic=1;
-
-
-//$gateway->insert($idTache,$contenu,$date,$importance,$isPublic);
-
-// ** Suppression ** //
-
-//$gateway->delete(21);
-
-// ** Suppression ** //
-
-$idTache = 18;
-$contenu = 'Acheter des mouchoires';
-$date='26/08/2020';
-$importance='3';
-$isPublic=0;
-
-//$gateway->update($idTache, $contenu, $date, $importance, $isPublic);
 
 // ** Affichage * //
 
