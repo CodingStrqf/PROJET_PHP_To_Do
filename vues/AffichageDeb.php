@@ -10,15 +10,15 @@
 $dVueEreur=[];     //Initialisation du tableau d'erreur
 ?>
 <form method="post">
-<?php
-if($co = $_GET['estConnecte']){
-    echo 'vous etes connecte';
-     ?><input type="submit" name="ecranCo" value="deconnection"><?php
-}else{
-    echo 'vous etes visiteur';
-    ?><input type="submit" name="ecranCo" value="connection"><?php
-}
-?>
+    <?php
+    if($co = $_GET['estConnecte']){
+        echo 'vous etes connecte';
+        ?><input type="submit" name="ecranCo" value="deconnection"><?php
+    }else{
+        echo 'vous etes visiteur';
+        ?><input type="submit" name="ecranCo" value="connection"><?php
+    }
+    ?>
 </form>
 
 
@@ -53,23 +53,23 @@ if($co = $_GET['estConnecte']){
 
      <?php
 
-        if ($co == '0'){
-            echo '
+     if ($co == '0'){
+         echo '
             <label for="isPub">
                 Rendre privé : vous n\'etes pas connecte, vous ne pouvez pas faire ca <br><br>
                 <input type="hidden" name="isPub" value="" >
             </label>';
-        }else{
-            echo '
+     }else{
+         echo '
             <label for="isPub">
                 Rendre privé : <input type="checkbox" name="isPub" > <br><br>
             </label>';
-        }
+     }
      ?>
 
     <input type="submit" value="Accept" >
     <input type="hidden" name="estConnecte" value="<?php echo $co ?>">
-</p>
+    </p>
 </form>
 
 
@@ -103,9 +103,9 @@ $TTache=$gateway->afficherTout($co, 'adrien');
 
 
 if($co = $_GET['estConnecte']){
-        require("vues/Affichage.php");
-    }else{
-        require("vues/AffichageVisiteur.php");
+    require("vues/Affichage.php");
+}else{
+    require("vues/AffichageVisiteur.php");
 }
 
 
@@ -115,7 +115,7 @@ if($co = $_GET['estConnecte']){
 </body>
 </html>
 <?php
-    if(isset($_POST['ecranCo'])){
-        header('Location:../PROJET_PHP_To_Do/vues/AffichageConnection.php');
-    }
+if(isset($_POST['ecranCo'])){
+    header('Location:../PROJET_PHP_To_Do/vues/AffichageConnection.php');
+}
 ?>

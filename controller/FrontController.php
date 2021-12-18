@@ -24,7 +24,7 @@ class FrontController
         require("vues/AffichageConnection.php");
 
         if($_SESSION['login'] != null){
-            require("vues/AffichageDebut.php");
+            require("vues/AffichageDeb.php");
         }
     }
 
