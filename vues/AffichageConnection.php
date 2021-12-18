@@ -13,39 +13,30 @@
 </form>
 
 <?php
-require("../modeles/Connection.php");
-require("../modeles/TacheGateway.php");
-require("../config/config.php");
-require_once ("../modeles/ConnectionGateway.php");
-
-try{
-    $con = new Connection($dns, $user, $mdp);
-}catch(PDOException $e1){
-    $dVueEreur[]=$e1->getMessage();
-}
-require("../vues/erreur.php");
-
-$gateway = new ConnectionGateway($con);
-
+require_once ("modeles/TacheGateway.php");
+require_once ("vues/erreur.php");
 
 if(isset($_POST['envoyer'])) {
 
     $id = $_POST['id'];
     $mdp = $_POST['mdp'];
-    $exist = $gateway->rechercheUtil($id,$mdp);
+    $exist = $gatewayConnection->rechercheUtil($id,$mdp);
+
 
     if($exist) {
-        $estConnecte = 1;
-        header('Location:../index.php?estConnecte='.$estConnecte);
+
+        $_SESSION['login'] = filter_var($id, FILTER_SANITIZE_STRING);
     }else{
         echo 'problème de login ou de mdp';
     }
 
 }
 if(isset($_POST['pasCo'])){
-    $estConnecte = 0;
-    header('Location:../index.php?estConnecte='.$estConnecte);
+
+    $_SESSION['login'] = "visiteur";
+//    header('Location:../index.php?estConnecte='.$estConnecte);
 }
+
 ?>
 
 </body>

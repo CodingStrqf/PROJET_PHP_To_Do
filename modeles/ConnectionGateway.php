@@ -19,7 +19,7 @@ class ConnectionGateway
         }catch (PDOException $e) {
             $dVueEreur[] = $e->getMessage();
         }
-        require('../vues/erreur.php');
+        require('vues/erreur.php');
         return count($this->con->getResults());
     }
 }
