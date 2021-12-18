@@ -15,28 +15,6 @@
 <?php
 require_once ("modeles/TacheGateway.php");
 require_once ("vues/erreur.php");
-
-if(isset($_POST['envoyer'])) {
-
-    $id = $_POST['id'];
-    $mdp = $_POST['mdp'];
-    $exist = $gatewayConnection->rechercheUtil($id,$mdp);
-
-
-    if($exist) {
-
-        $_SESSION['login'] = filter_var($id, FILTER_SANITIZE_STRING);
-    }else{
-        echo 'problème de login ou de mdp';
-    }
-
-}
-if(isset($_POST['pasCo'])){
-
-    $_SESSION['login'] = "visiteur";
-//    header('Location:../index.php?estConnecte='.$estConnecte);
-}
-
 ?>
 
 </body>

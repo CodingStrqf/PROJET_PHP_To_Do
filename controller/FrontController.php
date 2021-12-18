@@ -2,6 +2,8 @@
 require_once("modeles/ConnectionGateway.php");
 require_once("vues/erreur.php");
 require_once("modeles/Connection.php");
+require_once("UserControler.php");
+require_once("AdminControler.php");
 
 class FrontController
 {
@@ -19,22 +21,23 @@ class FrontController
 
         $gatewayConnection = new ConnectionGateway($con);
         session_start();
-        $_SESSION['login'] = null;
 
         require("vues/AffichageConnection.php");
 
-        if($_SESSION['login'] != null){
-            require("vues/AffichageDeb.php");
+
+        if(isset($_POST['envoyer'])) {                                                          // Test apres avoir clique dans AffichageConnection
+            $id = filter_var($_POST['id'], FILTER_SANITIZE_STRING);
+            $mdp = filter_var($_POST['mdp'], FILTER_SANITIZE_STRING);
+
+            $exist = $gatewayConnection->rechercheUtil($id,$mdp);
+
+            if($exist)
+                $c = new UserControler($id);                                              // connecte
+            else
+                echo 'problème de login ou de mdp';
         }
-    }
 
-
-    public function connection($login, $mdp){
-        $login = filter_var($login, FILTER_SANITIZE_STRING);
-        $mdp = filter_var($mdp, FILTER_SANITIZE_STRING);
-
-        if($gatewayConnection->rechercheUtil($id,$mdp)){
-
-        }
+        if(isset($_POST['pasCo']))
+            $c = new UserControler(null);                                               // pas connecte
     }
 }
