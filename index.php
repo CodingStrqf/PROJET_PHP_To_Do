@@ -46,16 +46,9 @@ if($co = $_GET['estConnecte']){
         </select>
     </label>
 
-    <label for="liste">
-        Liste : <select name="liste">
-            <option value="leoLoisir">leoLoisir</option>
-            <option value="adrienLoisir">adrienLoisir</option>
-        </select>
-        <br>
-    </label>
 
     <label for="newList" >
-        Nouvelle liste : <input type="text" name="newList"> <br>
+        Liste : <input type="text" name="newList"> <br>
     </label>
 
      <?php
@@ -84,7 +77,6 @@ if($co = $_GET['estConnecte']){
 <?php
 require_once("modeles/Tache.php");
 
-// ** Exemples de tache ** //
 
 require("vues/Affichage.php");
 
@@ -92,22 +84,31 @@ require("vues/Affichage.php");
 
 require("modeles/Connection.php");
 require("modeles/TacheGateway.php");
+require("modeles/ListeGateway.php");
 require("config/config.php");
 try{
     $con = new Connection($dns, $user, $mdp);
-}catch(PDOException $e1){
-    $dVueEreur[]=$e1->getMessage();
+}catch(PDOException $e){
+    $dVueEreur[]=$e->getMessage();
 }
 require("vues/erreur.php");
 
 
 $gateway = new TacheGateway($con);
+$gatewayList = new ListeGateway($con);
 
 // ** Affichage * //
 
 $TTache=$gateway->afficherTout($co, 'adrien');
 
-require("vues/Affichage.php");
+
+if($co = $_GET['estConnecte']){
+        require("vues/Affichage.php");
+    }else{
+        require("vues/AffichageVisiteur.php");
+}
+
+
 ?>
 </article>
 </span>

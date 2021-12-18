@@ -13,6 +13,7 @@ $connect=$_POST['estConnecte'];
 
 require("../modeles/Connection.php");
 require("../modeles/TacheGateway.php");
+require("../modeles/ListeGateway.php");
 require("../config/config.php");
 try{
     $con = new Connection($dns, $user, $mdp);
@@ -25,8 +26,9 @@ require("../vues/erreur.php");
 $gateway = new TacheGateway($con);
 
 
-//insertion
 
+//insertion
+$gatewayList = new ListeGateway($con);
 $tab=$gateway->findByIdTache($idTache);
 
 foreach ($tab as $row) {
@@ -39,7 +41,9 @@ $IdTache=$tache->getIdTache();
 $contenu=$tache->getContenu();
 $importance=$tache->getCouleur();
 $isPublic=$tache->getIsPublic();
-$idList=$tache->getIdListe();
+$idListe=$tache->getIdListe();
+
+$nom=$gatewayList->findByIdListe($idListe);
 
 ?>
 <form action="updateTache2.php" method="post">
@@ -57,18 +61,14 @@ $idList=$tache->getIdListe();
     <label for="import">
         Importance : <select name="import">
             <option value="#FF0000" <?php echo ($importance == '#FF0000') ? 'selected' : '' ?>>Important</option>
-            <option value="#FFA600" <?php echo ($importance == '#FFA600') ? 'selected' : '' ?> >Moyennement important</option>
-            <option value="#00FF94" <?php echo ($importance == '#00FF94') ? 'selected' : '' ?> >Pas important</option>
+            <option value="#FFA600" <?php echo ($importance == '#FFA600') ? 'selected' : '' ?>>Moyennement important</option>
+            <option value="#00FF94" <?php echo ($importance == '#00FF94') ? 'selected' : '' ?>>Pas important</option>
         </select>
         <br><br>
     </label>
 
-    <label for="liste">
-        Liste : <select name="liste">
-            <option value="leoLoisir">leoLoisir</option>
-            <option value="adrienLoisir">adrienLoisir</option>
-        </select>
-        <br>
+    <label for="newList" >
+        Liste : <input type="text" name="newList" value="<?php echo $nom[0] ?>"> <br>
     </label>
 
     <?php
@@ -92,3 +92,5 @@ $idList=$tache->getIdListe();
     <input type="hidden" name="estConnecte" value="<?php echo $connect ?>">
     </p>
 </form>
+
+

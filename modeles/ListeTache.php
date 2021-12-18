@@ -21,5 +21,11 @@ class ListeTache
 //        $this->taches = $t
 //        array_push($this->listeTache,$t);
 //    }
-
+    /**
+     * @return string
+     */
+    public function getIdListe(): string
+    {
+        return $this->idListe;
+    }
 }

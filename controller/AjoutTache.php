@@ -15,18 +15,19 @@ if(empty($_POST['isPub'])){
 }
 $idTache = 0;
 
-if(empty($_POST['newList'])){
-    $liste= $_POST['liste'];
-}else{
-    $liste= $_POST['newList'];
-    $newList=1;
-}
+//if(empty($_POST['newList'])){
+//    $liste= $_POST['liste'];
+//    $newList=0;
+//}else{
+    $nomListe= $_POST['newList'];
+    //$newList=1;
+//}
 
 //filter_var nettoyage
 $contenu=filter_var($tache, FILTER_SANITIZE_STRING);
 $date=filter_var($date, FILTER_SANITIZE_STRING);
 $importance=filter_var($import, FILTER_SANITIZE_STRING);
-$liste=filter_var($liste, FILTER_SANITIZE_STRING);
+$nomListe=filter_var($nomListe, FILTER_SANITIZE_STRING);
 
 
 // ** Base de donnée ** //
@@ -35,6 +36,7 @@ require("../modeles/Connection.php");
 require("../modeles/TacheGateway.php");
 require("../modeles/ListeGateway.php");
 require("../config/config.php");
+
 try{
     $con = new Connection($dns, $user, $mdp);
 }catch(PDOException $e){
@@ -42,16 +44,21 @@ try{
 }
 require("../vues/erreur.php");
 
-
 $gateway = new TacheGateway($con);
 $gatewayList = new ListeGateway($con);
 
-//insertion
-if($newList==1){
-    $gatewayList->insert($liste, 'adrien');
-    $liste='adrien'.$liste;
+
+
+
+if($gatewayList->getList('adrien'.$nomListe)==1){
+    $idListe='adrien'.$nomListe;
+    $gateway->insert($idTache,$contenu,$date,$importance,$isPublic,$idListe);
+}else{
+    $idListe='adrien'.$nomListe;
+    $gatewayList->insert($nomListe, 'adrien');
+    $gateway->insert($idTache,$contenu,$date,$importance,$isPublic,$idListe);
 }
-$gateway->insert($idTache,$contenu,$date,$importance,$isPublic,$liste);
+
 
 
 header('Location:../index.php?estConnecte='.$connect);
