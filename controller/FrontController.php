@@ -6,16 +6,14 @@ class FrontController
     {
         global $rep, $vues, $con;
         try{
-            $con = new Connection($dns, $user, $mdp);
+            $con = new Connection(dns, user, mdp);
         }catch(PDOException $e1){
             $dVueEreur[]=$e1->getMessage();
         }
-        require("../vues/erreur.php");
+        require($rep.$vues["erreur"]);
 
         $gatewayConnection = new ConnectionGateway($con);
         session_start();
-
-        require("vues/AffichageConnection.php");
 
 
         if(isset($_POST['envoyer'])) {                                                          // Test apres avoir clique dans AffichageConnection
@@ -24,13 +22,21 @@ class FrontController
 
             $exist = $gatewayConnection->rechercheUtil($id,$mdp);
 
-            if($exist)
+            if($exist) {
                 $c = new UserController($id);                                              // connecte
+            }
             else
                 echo 'problème de login ou de mdp';
+        }else{
+            if(!empty($_SESSION['login'])){
+
+                $c = new UserController($_SESSION['login']);
+            }else{
+                $c = new VisiteurController();
+            }
         }
 
-        if(isset($_POST['pasCo']))
-            $c = new GestController();                                               // pas connecte
-    }
+        if(isset($_POST['visiteur']))
+            $c = new VisiteurController();                                               // pas connecte
+        }
 }

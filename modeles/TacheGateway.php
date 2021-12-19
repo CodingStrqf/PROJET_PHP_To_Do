@@ -13,6 +13,7 @@ class TacheGateway
 
     public function insert(int $idTache, string $contenu, string $date, string $importance, int $isPublic, string $liste)
     {
+        global $rep,$vues;
         $query='INSERT INTO Tache VALUES(:idTache, :contenu, :date, :importance, :isPublic, :idListe)';
         $date = date_create_from_format("d/m/Y", $date)->format("Y/m/d");
         try {
@@ -27,11 +28,12 @@ class TacheGateway
         }catch(PDOException $e2){
             $dVueEreur[]=$e2->getMessage();
         }
-        require('../vues/erreur.php');
+        require($rep.$vues["erreur"]);
     }
 
     public function update(int $idTache, string $contenu, string $date, string $importance, int $isPublic, string $idListe)
     {
+        global $rep,$vues;
         $query ='UPDATE Tache SET contenu=:contenu, date=:date, importance=:importance, isPublic=:isPublic, idListe=:idListe WHERE idTache=:id';
         $date = date_create_from_format("d/m/Y", $date)->format("Y/m/d");
         try {
@@ -46,11 +48,12 @@ class TacheGateway
         }catch(PDOException $e){
             $dVueEreur[]=$e->getMessage();
         }
-        require('../vues/erreur.php');
+        require($rep.$vues["erreur"]);
     }
 
     public function delete(int $idTache)
     {
+        global $rep,$vues;
         $query='DELETE FROM Tache WHERE idTache = :idTache';
         try {
             $this->con->executeQuery($query, array(
@@ -59,12 +62,13 @@ class TacheGateway
         }catch(PDOException $e){
             $dVueEreur[]=$e->getMessage();
         }
-        require('../vues/erreur.php');
+        require($rep.$vues["erreur"]);
     }
 
 
     public function RecupeIdListUtil(string $idUtilisateur)
     {
+        global $rep,$vues;
         $query = 'SELECT DISTINCT idListe,nom,idUtilisateur FROM ListeTache WHERE idUtilisateur = :idUtilisateur';
 
         try {
@@ -78,12 +82,13 @@ class TacheGateway
         } catch (PDOException $e) {
             $dVueEreur[] = $e->getMessage();
         }
-        require('vues/erreur.php');
+        require($rep.$vues["erreur"]);
         return $tab;
     }
 
     public function RecupeTache(string $idListe)
     {
+        global $rep,$vues;
         $query = 'SELECT idTache,contenu,date,importance,isPublic FROM Tache WHERE idListe = :idListe';
         $tab = array();
         $toutesTaches = array();
@@ -100,12 +105,13 @@ class TacheGateway
         } catch (PDOException $e) {
             $dVueEreur[] = $e->getMessage();
         }
-        require('vues/erreur.php');
+        require($rep.$vues["erreur"]);
         return $toutesTaches;
     }
 
     public function RecupeTachePublic(string $idListe)
     {
+        global $rep,$vues;
         $query = 'SELECT idTache,contenu,date,importance FROM Tache WHERE idListe = :idListe AND isPublic = 1';
         $tab = array();
         $toutesTaches = array();
@@ -122,12 +128,12 @@ class TacheGateway
         } catch (PDOException $e) {
             $dVueEreur[] = $e->getMessage();
         }
-        require('vues/erreur.php');
+        require($rep.$vues["erreur"]);
         return $toutesTaches;
     }
 
 
-    public function afficherTout(string $idCompte)
+    public function recupListUtil(string $idCompte)
     {
         if($idCompte == null) {
             $tabTache=array();
@@ -148,6 +154,7 @@ class TacheGateway
 
     public function findByIdTache(int $idTache)
     {
+        global $rep,$vues;
         $query = 'SELECT idTache,contenu,date,importance,isPublic,idListe FROM Tache WHERE idTache=:idTache';
         $tab=array();
         try {
@@ -158,12 +165,13 @@ class TacheGateway
         } catch (PDOException $e) {
             $dVueEreur[] = $e->getMessage();
         }
-        require('../vues/erreur.php');
+        require($rep.$vues["erreur"]);
         return $tab;
     }
 
     public function isEmpty(string $idListe): int
     {
+        global $rep,$vues;
         $tab=array();
         $query='SELECT COUNT(*) FROM tache WHERE idListe = :idListe';
         try {
@@ -174,7 +182,7 @@ class TacheGateway
         }catch(PDOException $e){
             $dVueEreur[]=$e->getMessage();
         }
-        require('../vues/erreur.php');
+        require($rep.$vues["erreur"]);
         return $tab[0][0];
     }
 

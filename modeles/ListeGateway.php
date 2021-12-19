@@ -13,6 +13,7 @@ class ListeGateway
 
     public function insert(string $nom, string $idUtilisateur)
     {
+        global $rep,$vues;
         $idListe=$idUtilisateur.$nom;
         $query='INSERT INTO listetache VALUES(:idListe, :nom, :idUtilisateur)';
         try {
@@ -24,12 +25,13 @@ class ListeGateway
         }catch(PDOException $e){
             $dVueEreur[]=$e->getMessage();
         }
-        require('../vues/erreur.php');
+        require($rep.$vues["erreur"]);
     }
 
 
     public function delete(string $idListe)
     {
+        global $rep,$vues;
         $query='DELETE FROM listetache WHERE idListe = :idListe';
         try {
             $this->con->executeQuery($query, array(
@@ -38,11 +40,12 @@ class ListeGateway
         }catch(PDOException $e){
             $dVueEreur[]=$e->getMessage();
         }
-        require('../vues/erreur.php');
+        require($rep.$vues["erreur"]);
     }
 
     public function getList(string $idListe): int
     {
+        global $rep,$vues;
         $tab=array();
         $query='SELECT COUNT(*) FROM listetache WHERE idListe = :idListe';
         try {
@@ -53,7 +56,7 @@ class ListeGateway
         }catch(PDOException $e){
             $dVueEreur[]=$e->getMessage();
         }
-        require('../vues/erreur.php');
+        require($rep.$vues["erreur"]);
         return $tab[0][0];
     }
 
@@ -71,6 +74,7 @@ class ListeGateway
 
     public function getIdListe()
     {
+        global $rep,$vues;
         $query = 'SELECT idListe FROM listetache ';
         $tab=array();
         try {
@@ -79,7 +83,7 @@ class ListeGateway
         } catch (PDOException $e) {
             $dVueEreur[] = $e->getMessage();
         }
-        require('../vues/erreur.php');
+        require($rep.$vues["erreur"]);
         return $tab;
     }
 }

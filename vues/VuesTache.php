@@ -7,13 +7,15 @@
     <?php
         echo $value->__toString().'<br>';
     ?>
-    <form action="controller/delete.php" method="post">
-        <input type="submit" value="delete" >
+    <form method="post">
+        <input type="submit" value="Delete" >
         <input type="hidden" name="delete" value="<?php echo $value->getIdTache() ?>">
+        <input type="hidden" name="action" value="supprimer">
     </form>
-    <form action="controller/updateTache1.php" method="post">
+    <form method="post">
         <input type="submit" value="update" >
         <input type="hidden" name="update" value="<?php echo $value->getIdTache() ?>">
+        <input type="hidden" name="action" value="modifier">
     </form>
 </p>
-
+</html>

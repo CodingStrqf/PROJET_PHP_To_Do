@@ -1,26 +1,10 @@
 <!DOCTYPE html>
 <html lang="fr">
 <?php
-require_once('../modeles/Tache.php');
 
 
 
 $idTache= $_POST['update'];
-$connect=$_POST['estConnecte'];
-
-
-// ** Base de donnée ** //
-
-require("../modeles/Connection.php");
-require("../modeles/TacheGateway.php");
-require("../modeles/ListeGateway.php");
-require("../config/config.php");
-try{
-    $con = new Connection($dns, $user, $mdp);
-}catch(PDOException $e1){
-    $dVueEreur[]=$e1->getMessage();
-}
-require("../vues/erreur.php");
 
 
 $gateway = new TacheGateway($con);
@@ -46,7 +30,7 @@ $idListe=$tache->getIdListe();
 $nom=$gatewayList->findByIdListe($idListe);
 
 ?>
-<form action="updateTache2.php" method="post">
+<form  method="post">
     <p>
     <h2> Modifier une tache </h2>
 
@@ -71,26 +55,20 @@ $nom=$gatewayList->findByIdListe($idListe);
         Liste : <input type="text" name="newList" value="<?php echo $nom[0] ?>"> <br>
     </label>
 
-    <?php
 
-    if ($connect == '0'){
-        echo '
-            <label for="isPub">
-                Rendre privé : vous n\'etes pas connecte, vous ne pouvez pas faire ca <br><br>
-                <input type="hidden" name="estConnecte" value="0" >
-            </label>';
-    }else{?>
-            <label for="isPub">
-                Rendre privé : <input type="checkbox" name="isPub" <?php echo ($isPublic == 0) ? 'checked="checked"' : '' ?> > <br><br>
-            </label>
-    <?php
-    }
-    ?>
+
+<!--    <label for="isPub">-->
+<!--        Rendre privé : vous n\'etes pas connecte, vous ne pouvez pas faire ca <br><br>-->
+<!--        <input type="hidden" name="estConnecte" value="0" >-->
+<!--    </label>'-->
+    <label for="isPub">
+        Rendre privé : <input type="checkbox" name="isPub" <?php echo ($isPublic == 0) ? 'checked="checked"' : '' ?> > <br><br>
+    </label>
+
 
     <button>Accept</button>
     <input type="hidden" name="idTache" value="<?php echo $IdTache ?>">
     <input type="hidden" name="estConnecte" value="<?php echo $connect ?>">
     </p>
 </form>
-
 
