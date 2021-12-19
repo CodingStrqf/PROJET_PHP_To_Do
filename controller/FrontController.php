@@ -1,21 +1,16 @@
 <?php
-require_once("modeles/ConnectionGateway.php");
-require_once("vues/erreur.php");
-require_once("modeles/Connection.php");
-require_once("UserControler.php");
-require_once("AdminControler.php");
 
 class FrontController
 {
     public function __construct()
     {
-        require("config/config.php");
-
+        global $rep, $vues, $con;
         try{
             $con = new Connection($dns, $user, $mdp);
         }catch(PDOException $e1){
             $dVueEreur[]=$e1->getMessage();
         }
+        require("../vues/erreur.php");
 
         $gatewayConnection = new ConnectionGateway($con);
         session_start();
@@ -30,12 +25,12 @@ class FrontController
             $exist = $gatewayConnection->rechercheUtil($id,$mdp);
 
             if($exist)
-                $c = new UserControler($id);                                              // connecte
+                $c = new UserController($id);                                              // connecte
             else
                 echo 'problème de login ou de mdp';
         }
 
         if(isset($_POST['pasCo']))
-            $c = new UserControler(null);                                               // pas connecte
+            $c = new GestController();                                               // pas connecte
     }
 }

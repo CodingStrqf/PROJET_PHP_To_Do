@@ -178,19 +178,4 @@ class TacheGateway
         return $tab[0][0];
     }
 
-//    public function isEmptyPublic(string $idListe): int
-//    {
-//        $tab=array();
-//        $query='SELECT COUNT(*) FROM tache WHERE idListe = :idListe AND isPublic = 1';
-//        try {
-//            $this->con->executeQuery($query, array(
-//                ':idListe' => array($idListe, PDO::PARAM_STR),
-//            ));
-//            $tab = $this->con->getResults();
-//        }catch(PDOException $e){
-//            $dVueEreur[]=$e->getMessage();
-//        }
-//        require('vues/erreur.php');
-//        return $tab[0][0];
-//    }
 }
