@@ -7,12 +7,10 @@ require_once("AdminControler.php");
 
 class FrontController
 {
-    private ConnectionGateway $gatewayConnection;
-
     public function __construct()
     {
         require("config/config.php");
-        global $con;
+
         try{
             $con = new Connection($dns, $user, $mdp);
         }catch(PDOException $e1){

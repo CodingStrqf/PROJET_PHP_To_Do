@@ -9,7 +9,7 @@ class UserControler
             require_once("vues/AffichagePasCo.php");
         }else{
             $_SESSION['login'] = $id;
-            require_once("vues/AffichageConnection.php");
+            require_once("vues/AffichageCo.php");
         }
     }
 }

@@ -59,8 +59,5 @@ if($gatewayList->getList('adrien'.$nomListe)==1){
     $gateway->insert($idTache,$contenu,$date,$importance,$isPublic,$idListe);
 }
 
-
-
-header('Location:../index.php?estConnecte='.$connect);
 ?>
 

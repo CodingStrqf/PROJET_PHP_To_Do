@@ -12,11 +12,6 @@
     <input type="submit" name="envoyer" value="Connection"> <input type="submit" name="pasCo" value="ne pas se connecter">
 </form>
 
-<?php
-require_once ("modeles/TacheGateway.php");
-require_once ("vues/erreur.php");
-?>
-
 </body>
 </html>
 

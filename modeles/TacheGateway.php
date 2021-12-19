@@ -127,21 +127,20 @@ class TacheGateway
     }
 
 
-    public function afficherTout(int $co, string $idCompte)
+    public function afficherTout(string $idCompte)
     {
-        if($co == 1) {
-            $tabTache=array();
-            $tabList = $this->RecupeIdListUtil($idCompte);
-            foreach ($tabList as $idList) {
-                $tabTache[] = $this->RecupeTache($idList[0]);
-            }
-            return $tabTache;
-
-        } else{
+        if($idCompte == null) {
             $tabTache=array();
             $tabList = $this->RecupeIdListUtil($idCompte);
             foreach ($tabList as $idList) {
                 $tabTache[] = $this->RecupeTachePublic($idList[0]);
+            }
+            return $tabTache;
+        } else{
+            $tabTache=array();
+            $tabList = $this->RecupeIdListUtil($idCompte);
+            foreach ($tabList as $idList) {
+                $tabTache[] = $this->RecupeTache($idList[0]);
             }
             return $tabTache;
         }
