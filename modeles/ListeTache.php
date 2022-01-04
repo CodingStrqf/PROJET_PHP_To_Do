@@ -28,4 +28,12 @@ class ListeTache
     {
         return $this->idListe;
     }
+
+    /**
+     * @return string
+     */
+    public function getNom(): string
+    {
+        return $this->nom;
+    }
 }

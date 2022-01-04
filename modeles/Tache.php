@@ -20,10 +20,10 @@ class Tache
     public function __toString(): string{
         $aRetourn = "Tache a faire : $this->contenu ".'<br>';
         $aRetourn = $aRetourn."Pour le : $this->date ".'<br>';
-        $aRetourn = $aRetourn."Identifiant : $this->idTache ".'<br>';
-        $aRetourn = $aRetourn."Importance : $this->importance ".'<br>';
-        $aRetourn = $aRetourn."est public ? : $this->isPublic".'<br>';
-        $aRetourn = $aRetourn."Liste : $this->idListe".'<br>'.'<br>';
+        //$aRetourn = $aRetourn."Identifiant : $this->idTache ".'<br>';
+        //$aRetourn = $aRetourn."Importance : $this->importance ".'<br>';
+        //$aRetourn = $aRetourn."est public ? : $this->isPublic".'<br>';
+        //$aRetourn = $aRetourn."Liste : $this->idListe".'<br>'.'<br>';
         return $aRetourn;
     }
 

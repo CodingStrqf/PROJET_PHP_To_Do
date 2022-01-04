@@ -168,41 +168,43 @@ class UserController
     }
 
     public function confirmerTache(){
-        global $con;
+        global $con,$rep,$con;
+
+        $dVueEreur=[];
 
         $idTache = $_POST['idTache'];
         $tache = $_POST['tache'] ?? 'pasdetache';
         $date = $_POST['date'] ?? '';
-        $import = $_POST['import'] ?? '';
+        $importance = $_POST['import'] ?? '';
 
         $isPublic = 1;
         $nomListe = $_POST['newList'] ?? '';
 
         //filter_var nettoyage
-        $contenu = filter_var($tache, FILTER_SANITIZE_STRING);
-        $date = filter_var($date, FILTER_SANITIZE_STRING);
-        $importance = filter_var($import, FILTER_SANITIZE_STRING);
-        $nomListe = filter_var($nomListe, FILTER_SANITIZE_STRING);
+        Validation::validation_tache($tache, $date, $nomListe, $dVueEreur);
+        if(!empty($dVueEreur)){
+            require($rep . $vues["erreur"]);
+        }else{
+            $gateway = new TacheGateway($con);
+            $gatewayList = new ListeGateway($con);
 
 
-        $gateway = new TacheGateway($con);
-        $gatewayList = new ListeGateway($con);
-
-
-        $idListe = "visiteur" . $nomListe;
-        if ($gatewayList->getList($idListe) == 1) {
-            $gateway->update($idTache, $contenu, $date, $importance, $isPublic, $idListe);
-        } else {
-            $gatewayList->insert($nomListe, "visiteur");
-            $gateway->update($idTache, $contenu, $date, $importance, $isPublic, $idListe);
-        }
-
-
-        $IdListes = $gatewayList->getIdListe();
-        foreach ($IdListes as $idListe)
-            if (($gateway->isEmpty($idListe[0])) == 0) {
-                $gatewayList->delete($idListe[0]);
+            $idListe = "visiteur" . $nomListe;
+            if ($gatewayList->getList($idListe) == 1) {
+                $gateway->update($idTache, $tache, $date, $importance, $isPublic, $idListe);
+            } else {
+                $gatewayList->insert($nomListe, "visiteur");
+                $gateway->update($idTache, $tache, $date, $importance, $isPublic, $idListe);
             }
+
+
+            $IdListes = $gatewayList->getIdListe();
+            foreach ($IdListes as $idListe){
+                if (($gateway->isEmpty($idListe[0])) == 0) {
+                    $gatewayList->delete($idListe[0]);
+                }
+            }
+        }
         $this->afficherTache();
     }
 }
