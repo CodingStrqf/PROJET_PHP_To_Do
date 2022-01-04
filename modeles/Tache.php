@@ -39,6 +39,10 @@ class Tache
         return $this->contenu;
     }
 
+    public function setContenu($contenu){
+        $this->contenu = $contenu;
+    }
+
     public function getDate(): string{
         return $this->date;
     }
