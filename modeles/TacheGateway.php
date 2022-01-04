@@ -161,9 +161,11 @@ class TacheGateway
             $tabList = $this->RecupeIdList();
             foreach ($tabList as $idList) {
                 $tache = $this->RecupeTachePublic($idList[0]);
+                /*
                 foreach ($tache as $tacheIndivi){
                     $tacheIndivi->setContenu($tacheIndivi->getContenu().' '.$idList[2] );
                 }
+                */
                 $tabTache[] = $tache;
             }
             return $tabTache;
@@ -172,9 +174,11 @@ class TacheGateway
             $tabList = $this->RecupeIdListUtil($idCompte);
             foreach ($tabList as $idList) {
                 $tache = $this->RecupeTache($idList[0]);
+                /*
                 foreach ($tache as $tacheIndivi){
                     $tacheIndivi->setContenu($tacheIndivi->getContenu().' '.$idList[2] );
                 }
+                */
                 $tabTache[] = $tache;
             }
             return $tabTache;

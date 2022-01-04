@@ -55,7 +55,7 @@ class UserController
         if (!empty($TTache)){
             foreach ($TTache as $row ){
                 $nom=$gatewayList->findByIdListe($row[0]->getIdListe());
-                echo "Liste : $nom[0]";
+                echo "Liste : $nom[0] de l'utilisateur : $nom[1]";
                 foreach ($row as $value) {
                     require($rep.$vues["tache"]);
                 }

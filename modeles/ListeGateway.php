@@ -63,7 +63,7 @@ class ListeGateway
 
     public function findByIdListe(string $idListe)
     {
-        $query = 'SELECT nom FROM listetache WHERE idListe=:idListe';
+        $query = 'SELECT nom ,idUtilisateur FROM listetache WHERE idListe=:idListe';
         $tab=array();
         $this->con->executeQuery($query, array(
             ':idListe' => array($idListe, PDO::PARAM_STR)
