@@ -176,34 +176,54 @@ class UserController
         $tache = $_POST['tache'] ?? 'pasdetache';
         $date = $_POST['date'] ?? '';
         $importance = $_POST['import'] ?? '';
+        $idListe = $_POST['idListe'] ?? '';
 
-        $isPublic = 1;
+        if (empty($_POST['isPub'])) {
+            $isPublic = 1;
+        } else {
+            $isPublic = 0;
+        }
+
         $nomListe = $_POST['newList'] ?? '';
 
-        //filter_var nettoyage
-        Validation::validation_tache($tache, $date, $nomListe, $dVueEreur);
-        if(!empty($dVueEreur)){
-            require($rep . $vues["erreur"]);
-        }else{
-            $gateway = new TacheGateway($con);
-            $gatewayList = new ListeGateway($con);
+        switch (null) {
+            case $tache:
+                $message = 'veuillez rentrer un nom de tache';
+                echo '<script type="text/javascript">window.alert("' . $message . '");</script>';
+                break;
+            case $date:
+                $message = 'veuillez rentrer une date';
+                echo '<script type="text/javascript">window.alert("' . $message . '");</script>';
+                break;
+            case $nomListe:
+                $message = 'veuillez rentrer un nom de liste';
+                echo '<script type="text/javascript">window.alert("' . $message . '");</script>';
+                break;
+            default:
+
+                //filter_var nettoyage
+                Validation::validation_tache($tache, $date, $nomListe, $dVueEreur);
+                if (!empty($dVueEreur)) {
+                    require($rep . $vues["erreur"]);
+                } else {
+                    $gateway = new TacheGateway($con);
+                    $gatewayList = new ListeGateway($con);
+
+                    if ($gatewayList->getList($idListe) == 1) {
+                        $gateway->update($idTache, $tache, $date, $importance, $isPublic, $idListe);
+                    } else {
+                        $gatewayList->insert($nomListe, "visiteur");
+                        $gateway->update($idTache, $tache, $date, $importance, $isPublic, $idListe);
+                    }
 
 
-            $idListe = "visiteur" . $nomListe;
-            if ($gatewayList->getList($idListe) == 1) {
-                $gateway->update($idTache, $tache, $date, $importance, $isPublic, $idListe);
-            } else {
-                $gatewayList->insert($nomListe, "visiteur");
-                $gateway->update($idTache, $tache, $date, $importance, $isPublic, $idListe);
-            }
-
-
-            $IdListes = $gatewayList->getIdListe();
-            foreach ($IdListes as $idListe){
-                if (($gateway->isEmpty($idListe[0])) == 0) {
-                    $gatewayList->delete($idListe[0]);
+                    $IdListes = $gatewayList->getIdListe();
+                    foreach ($IdListes as $idListe) {
+                        if (($gateway->isEmpty($idListe[0])) == 0) {
+                            $gatewayList->delete($idListe[0]);
+                        }
+                    }
                 }
-            }
         }
         $this->afficherTache();
     }

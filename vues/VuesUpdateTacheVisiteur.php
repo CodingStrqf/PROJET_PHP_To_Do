@@ -29,5 +29,6 @@
     <input type="submit" value="Accept">
     <input type="hidden" name="action" value="confirmerTache">
     <input type="hidden" name="idTache" value="<?php echo $IdTache ?>">
+    <input type="hidden" name="idListe" value="<?php echo $idListe ?>">
     </p>
 </form>
