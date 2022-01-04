@@ -14,7 +14,7 @@
 <body>
 <span  class="corp">
 
-<form action="controller/AjoutTache.php" method="post">
+<form method="post">
 <p>
     <h2> Ajouter tache </h2>
 
@@ -40,7 +40,8 @@
     </label>
 
 
-    <input type="submit" value="Accept" >
+    <input type="submit" value="Accept">
+    <input type="hidden" name="action" value="ajouter">
     </p>
 </form>
 </span>

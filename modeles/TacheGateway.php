@@ -69,12 +69,32 @@ class TacheGateway
     public function RecupeIdListUtil(string $idUtilisateur)
     {
         global $rep,$vues;
-        $query = 'SELECT DISTINCT idListe,nom,idUtilisateur FROM ListeTache WHERE idUtilisateur = :idUtilisateur';
+        $query = 'SELECT DISTINCT idListe,nom,idUtilisateur FROM ListeTache WHERE idUtilisateur = :idUtilisateur OR idUtilisateur="visiteur"';
 
         try {
             $this->con->executeQuery($query, array(
                 ':idUtilisateur' => array($idUtilisateur, PDO::PARAM_STR)
             ));
+            $tab = $this->con->getResults();
+            foreach ($tab as $row) {
+                $toutesListeTache[] = new ListeTache($row['nom'],$row['idUtilisateur']);
+            }
+        } catch (PDOException $e) {
+            $dVueEreur[] = $e->getMessage();
+        }
+        require($rep.$vues["erreur"]);
+        return $tab;
+    }
+
+
+
+    public function RecupeIdList()
+    {
+        global $rep,$vues;
+        $query = 'SELECT DISTINCT idListe,nom,idUtilisateur FROM ListeTache';
+
+        try {
+            $this->con->executeQuery($query, array());
             $tab = $this->con->getResults();
             foreach ($tab as $row) {
                 $toutesListeTache[] = new ListeTache($row['nom'],$row['idUtilisateur']);
@@ -135,9 +155,9 @@ class TacheGateway
 
     public function recupListUtil(string $idCompte)
     {
-        if($idCompte == null) {
+        if($idCompte == "visiteur") {
             $tabTache=array();
-            $tabList = $this->RecupeIdListUtil($idCompte);
+            $tabList = $this->RecupeIdList();
             foreach ($tabList as $idList) {
                 $tabTache[] = $this->RecupeTachePublic($idList[0]);
             }
@@ -151,6 +171,7 @@ class TacheGateway
             return $tabTache;
         }
     }
+
 
     public function findByIdTache(int $idTache)
     {

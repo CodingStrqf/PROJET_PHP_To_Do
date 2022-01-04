@@ -21,6 +21,9 @@ class UserController
                 case "deconnection":
                     $this->deconnection();
                     break;
+                case "confirmerTache":
+                    $this->confirmerTache();
+                    break;
                 default:
                     $this->afficherTache();
             }
@@ -50,7 +53,6 @@ class UserController
 
         $TTache=$gatewayTache->recupListUtil($_SESSION['login']);
         if (!empty($TTache)){
-
             foreach ($TTache as $row ){
                 $nom=$gatewayList->findByIdListe($row[0]->getIdListe());
                 echo "Liste : $nom[0]";
@@ -66,7 +68,7 @@ class UserController
 
         $tache = $_POST['tache'] ?? 'pasdetache';
         $date = $_POST['date'] ?? '';
-        $import = $_POST['import'] ?? '';
+        $importance = $_POST['import'] ?? '';
 
         if (empty($_POST['isPub'])) {
             $isPublic = 1;
@@ -81,7 +83,6 @@ class UserController
         //filter_var nettoyage
         $contenu = filter_var($tache, FILTER_SANITIZE_STRING);
         $date = filter_var($date, FILTER_SANITIZE_STRING);
-        $importance = filter_var($import, FILTER_SANITIZE_STRING);
         $nomListe = filter_var($nomListe, FILTER_SANITIZE_STRING);
 
 
@@ -93,7 +94,7 @@ class UserController
             $idListe = $_SESSION["login"] . $nomListe;
             $gateway->insert($idTache, $contenu, $date, $importance, $isPublic, $idListe);
         } else {
-            $idListe = 'adrien' . $nomListe;
+            $idListe = $_SESSION["login"] . $nomListe;
             $gatewayList->insert($nomListe, $_SESSION["login"]);
             $gateway->insert($idTache, $contenu, $date, $importance, $isPublic, $idListe);
         }
@@ -121,18 +122,42 @@ class UserController
     }
 
     public function modifierTache(){
-        global $rep,$vues;
-        require($rep.$vues["updateTache"]);
+        global $rep,$vues,$con;
+
+        $idTache = $_POST['update'];
+        $gateway = new TacheGateway($con);
+
+        //insertion
+        $gatewayList = new ListeGateway($con);
+        $tab = $gateway->findByIdTache($idTache);
+
+        foreach ($tab as $row) {
+            $tache = new Tache($row['idTache'], $row['contenu'], $row['date'], $row['importance'], $row['isPublic'], $row['idListe']);
+        }
+
+        $date = date_create_from_format("Y-m-d", $tache->getDate())->format("d/m/Y");
+
+        $IdTache = $tache->getIdTache();
+        $contenu = $tache->getContenu();
+        $importance = $tache->getCouleur();
+        $isPublic = $tache->getIsPublic();
+        $idListe = $tache->getIdListe();
+
+        $nom = $gatewayList->findByIdListe($idListe);
+
+
+        require($rep.$vues["updateTache"]);   //Appel de la vue
+    }
+
+    public function confirmerTache(){
+        global $con;
 
         $idTache = $_POST['idTache'];
         $tache = $_POST['tache'] ?? 'pasdetache';
         $date = $_POST['date'] ?? '';
         $import = $_POST['import'] ?? '';
-        if (empty($_POST['isPub'])) {
-            $isPublic = 1;
-        } else {
-            $isPublic = 0;
-        }
+
+        $isPublic = 1;
         $nomListe = $_POST['newList'] ?? '';
 
         //filter_var nettoyage
@@ -146,11 +171,11 @@ class UserController
         $gatewayList = new ListeGateway($con);
 
 
-        $idListe = $_SESSION["login"] . $nomListe;
+        $idListe = "visiteur" . $nomListe;
         if ($gatewayList->getList($idListe) == 1) {
             $gateway->update($idTache, $contenu, $date, $importance, $isPublic, $idListe);
         } else {
-            $gatewayList->insert($nomListe, $_SESSION["login"]);
+            $gatewayList->insert($nomListe, "visiteur");
             $gateway->update($idTache, $contenu, $date, $importance, $isPublic, $idListe);
         }
 

@@ -14,3 +14,7 @@ Pour les plus téméraires, essayez de compléter/dé-compléter des tâches via
 La gestion des droits doit être complète, un visiteur ne doit pas pouvoir accéder aux listes des utilisateurs ou les supprimer, idem pour la complétion des tâches.
 
 En général dans une application de gestion de tâches, les tâches complétées sont barrées afin d’être distinguées des tâches restantes. Cela est faisable via CSS pur (i.e. : la page n’a pas besoin d’être actualisée, et l’utilisation de JavaScript n’est pas requise).
+
+
+Problème: un visiteur qui créer une tache dans Loisir alors qu'un utilisateur possède déja une liste loisir vera deux fois le titre de la liste
+A faire : validation et page

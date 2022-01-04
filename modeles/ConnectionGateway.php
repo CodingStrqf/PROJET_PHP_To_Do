@@ -10,6 +10,7 @@ class ConnectionGateway
     }
 
     public function rechercheUtil(string $id, string $mdp):int{
+        global $rep, $vues;
         try {
             $query = 'SELECT id,mdp FROM utilisateur WHERE id = :id AND mdp = :mdp';
             $resultat = $this->con->executeQuery($query, array(
@@ -19,7 +20,7 @@ class ConnectionGateway
         }catch (PDOException $e) {
             $dVueEreur[] = $e->getMessage();
         }
-        require('vues/erreur.php');
+        require($rep.$vues["erreur"]);
         return count($this->con->getResults());
     }
 }

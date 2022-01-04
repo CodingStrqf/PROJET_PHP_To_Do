@@ -18,6 +18,9 @@ class VisiteurController
                 case "modifier":
                     $this->modifierTache();
                     break;
+                case "confirmerTache":
+                    $this->confirmerTache();
+                    break;
                 case "connection":
                     $this->connection();
                     break;
@@ -41,37 +44,155 @@ class VisiteurController
 
     public function afficherTache(){
         global $rep, $vues,$con;
+
+        require($rep.$vues["visiteur"]);
+
         $gatewayTache = new TacheGateway($con);
         $gatewayList = new ListeGateway($con);
         // ** Affichage * //
 
-        require($rep.$vues["visiteur"]);
 
 
-        $TTache=$gatewayTache->afficherTout(null);
+        $TTache=$gatewayTache->recupListUtil("visiteur");
 
-        
-        foreach ($TTache as $row ){
+        if (!empty($TTache)){
 
-            if($row!=null){
-                $nom=$gatewayList->findByIdListe($row[0]->getIdListe());
-                echo "Liste : $nom[0]";
-                foreach ($row as $value) {
-                    require($rep.$vues["affichageTache"]);
+            foreach ($TTache as $row ){
+                if($row!=null) {
+                    $nom = $gatewayList->findByIdListe($row[0]->getIdListe());
+                    echo "Liste : $nom[0]";
+                    foreach ($row as $value) {
+                        require($rep . $vues["tache"]);
+                    }
                 }
             }
         }
     }
 
     public function ajouterTache(){
+        global $con;
 
+        $tache = $_POST['tache'] ?? 'pasdetache';
+        $date = $_POST['date'] ?? '';
+        $import = $_POST['import'] ?? '';
+
+
+        $isPublic = 1;
+
+        $idTache = 0;
+
+        $nomListe = $_POST['newList'];
+
+
+        //filter_var nettoyage
+        $contenu = filter_var($tache, FILTER_SANITIZE_STRING);
+        $date = filter_var($date, FILTER_SANITIZE_STRING);
+        $importance = filter_var($import, FILTER_SANITIZE_STRING);
+        $nomListe = filter_var($nomListe, FILTER_SANITIZE_STRING);
+
+
+        $gateway = new TacheGateway($con);
+        $gatewayList = new ListeGateway($con);
+
+
+        if ($gatewayList->getList("visiteur" . $nomListe) == 1) {
+            $idListe = "visiteur" . $nomListe;
+            $gateway->insert($idTache, $contenu, $date, $importance, $isPublic, $idListe);
+        } else {
+            $idListe = "visiteur" . $nomListe;
+            $gatewayList->insert($nomListe, "visiteur");
+            $gateway->insert($idTache, $contenu, $date, $importance, $isPublic, $idListe);
+        }
+        $this->afficherTache();
     }
 
     public function supprimerTache(){
+        global $con;
 
+        $idTache = $_POST['delete'];
+
+
+        $gatewayTache = new TacheGateway($con);
+        $gatewayList = new ListeGateway($con);
+
+        //suppression
+        $tache = $gatewayTache->findByIdTache($idTache);
+        $idListe = $tache[0][5];
+
+        $gatewayTache->delete($idTache);
+        if (($gatewayTache->isEmpty($idListe)) == 0) {
+            $gatewayList->delete($idListe);
+        }
+        $this->afficherTache();
     }
 
     public function modifierTache(){
+        global $rep,$vues,$con;
 
+        $idTache = $_POST['update'];
+        $gateway = new TacheGateway($con);
+
+        //insertion
+        $gatewayList = new ListeGateway($con);
+        $tab = $gateway->findByIdTache($idTache);
+
+        foreach ($tab as $row) {
+            $tache = new Tache($row['idTache'], $row['contenu'], $row['date'], $row['importance'], $row['isPublic'], $row['idListe']);
+        }
+
+        $date = date_create_from_format("Y-m-d", $tache->getDate())->format("d/m/Y");
+
+        $IdTache = $tache->getIdTache();
+        $contenu = $tache->getContenu();
+        $importance = $tache->getCouleur();
+        $isPublic = $tache->getIsPublic();
+        $idListe = $tache->getIdListe();
+
+        $nom = $gatewayList->findByIdListe($idListe);
+
+
+        require($rep.$vues["updateTacheVisiteur"]);   //Appel de la vue
+    }
+
+    public function confirmerTache(){
+        global $con;
+
+        $idTache = $_POST['idTache'];
+        $tache = $_POST['tache'] ?? 'pasdetache';
+        $date = $_POST['date'] ?? '';
+        $import = $_POST['import'] ?? '';
+        if (empty($_POST['isPub'])) {
+            $isPublic = 1;
+        } else {
+            $isPublic = 0;
+        }
+        $nomListe = $_POST['newList'] ?? '';
+
+        //filter_var nettoyage
+        $contenu = filter_var($tache, FILTER_SANITIZE_STRING);
+        $date = filter_var($date, FILTER_SANITIZE_STRING);
+        $importance = filter_var($import, FILTER_SANITIZE_STRING);
+        $nomListe = filter_var($nomListe, FILTER_SANITIZE_STRING);
+
+
+        $gateway = new TacheGateway($con);
+        $gatewayList = new ListeGateway($con);
+
+
+        $idListe = "visiteur" . $nomListe;
+        if ($gatewayList->getList($idListe) == 1) {
+            $gateway->update($idTache, $contenu, $date, $importance, $isPublic, $idListe);
+        } else {
+            $gatewayList->insert($nomListe, "visiteur");
+            $gateway->update($idTache, $contenu, $date, $importance, $isPublic, $idListe);
+        }
+
+
+        $IdListes = $gatewayList->getIdListe();
+        foreach ($IdListes as $idListe)
+            if (($gateway->isEmpty($idListe[0])) == 0) {
+                $gatewayList->delete($idListe[0]);
+            }
+        $this->afficherTache();
     }
 }
