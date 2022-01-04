@@ -69,36 +69,52 @@ class UserController
         $tache = $_POST['tache'] ?? 'pasdetache';
         $date = $_POST['date'] ?? '';
         $importance = $_POST['import'] ?? '';
-
-        if (empty($_POST['isPub'])) {
-            $isPublic = 1;
-        } else {
-            $isPublic = 0;
-        }
-        $idTache = 0;
-
         $nomListe = $_POST['newList'];
 
+        switch (null){
+            case $tache:
+                $message='veuillez rentrer un nom de tache';
+                echo '<script type="text/javascript">window.alert("'.$message.'");</script>';
+                break;
+            case $date:
+                $message='veuillez rentrer une date';
+                echo '<script type="text/javascript">window.alert("'.$message.'");</script>';
+                break;
+            case $nomListe:
+                $message='veuillez rentrer un nom de liste valide';
+                echo '<script type="text/javascript">window.alert("'.$message.'");</script>';
+                break;
+            default:
+                if (empty($_POST['isPub'])) {
+                    $isPublic = 1;
+                } else {
+                    $isPublic = 0;
+                }
+                $idTache = 0;
 
-        //filter_var nettoyage
-        $contenu = filter_var($tache, FILTER_SANITIZE_STRING);
-        $date = filter_var($date, FILTER_SANITIZE_STRING);
-        $nomListe = filter_var($nomListe, FILTER_SANITIZE_STRING);
+                //filter_var nettoyage
+                $contenu = filter_var($tache, FILTER_SANITIZE_STRING);
+                $date = filter_var($date, FILTER_SANITIZE_STRING);
+                $nomListe = filter_var($nomListe, FILTER_SANITIZE_STRING);
 
 
-        $gateway = new TacheGateway($con);
-        $gatewayList = new ListeGateway($con);
+                $gateway = new TacheGateway($con);
+                $gatewayList = new ListeGateway($con);
 
 
-        if ($gatewayList->getList($_SESSION["login"] . $nomListe) == 1) {
-            $idListe = $_SESSION["login"] . $nomListe;
-            $gateway->insert($idTache, $contenu, $date, $importance, $isPublic, $idListe);
-        } else {
-            $idListe = $_SESSION["login"] . $nomListe;
-            $gatewayList->insert($nomListe, $_SESSION["login"]);
-            $gateway->insert($idTache, $contenu, $date, $importance, $isPublic, $idListe);
+                if ($gatewayList->getList($_SESSION["login"] . $nomListe) == 1) {
+                    $idListe = $_SESSION["login"] . $nomListe;
+                    $gateway->insert($idTache, $contenu, $date, $importance, $isPublic, $idListe);
+                } else {
+                    $idListe = $_SESSION["login"] . $nomListe;
+                    $gatewayList->insert($nomListe, $_SESSION["login"]);
+                    $gateway->insert($idTache, $contenu, $date, $importance, $isPublic, $idListe);
+                }
+                break;
+
         }
         $this->afficherTache();
+
     }
 
     public function supprimerTache(){
