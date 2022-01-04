@@ -64,7 +64,8 @@ class UserController
     }
 
     public function ajouterTache(){
-        global $con;
+        global $con,$rep,$vues;
+        $dVueEreur=[];
 
         $tache = $_POST['tache'] ?? 'pasdetache';
         $date = $_POST['date'] ?? '';
@@ -81,7 +82,7 @@ class UserController
                 echo '<script type="text/javascript">window.alert("'.$message.'");</script>';
                 break;
             case $nomListe:
-                $message='veuillez rentrer un nom de liste valide';
+                $message='veuillez rentrer un nom de liste';
                 echo '<script type="text/javascript">window.alert("'.$message.'");</script>';
                 break;
             default:
@@ -93,23 +94,24 @@ class UserController
                 $idTache = 0;
 
                 //filter_var nettoyage
-                $contenu = filter_var($tache, FILTER_SANITIZE_STRING);
-                $date = filter_var($date, FILTER_SANITIZE_STRING);
-                $nomListe = filter_var($nomListe, FILTER_SANITIZE_STRING);
+                Validation::validation_tache($tache, $date, $nomListe, $dVueEreur);
+                if(!empty($dVueEreur)){
+                    require($rep . $vues["erreur"]);
+                }else{
+                    $gateway = new TacheGateway($con);
+                    $gatewayList = new ListeGateway($con);
 
 
-                $gateway = new TacheGateway($con);
-                $gatewayList = new ListeGateway($con);
-
-
-                if ($gatewayList->getList($_SESSION["login"] . $nomListe) == 1) {
-                    $idListe = $_SESSION["login"] . $nomListe;
-                    $gateway->insert($idTache, $contenu, $date, $importance, $isPublic, $idListe);
-                } else {
-                    $idListe = $_SESSION["login"] . $nomListe;
-                    $gatewayList->insert($nomListe, $_SESSION["login"]);
-                    $gateway->insert($idTache, $contenu, $date, $importance, $isPublic, $idListe);
+                    if ($gatewayList->getList($_SESSION["login"] . $nomListe) == 1) {
+                        $idListe = $_SESSION["login"] . $nomListe;
+                        $gateway->insert($idTache, $tache, $date, $importance, $isPublic, $idListe);
+                    } else {
+                        $idListe = $_SESSION["login"] . $nomListe;
+                        $gatewayList->insert($nomListe, $_SESSION["login"]);
+                        $gateway->insert($idTache, $tache, $date, $importance, $isPublic, $idListe);
+                    }
                 }
+
                 break;
 
         }
