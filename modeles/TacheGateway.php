@@ -69,7 +69,7 @@ class TacheGateway
     public function RecupeIdListUtil(string $idUtilisateur)
     {
         global $rep,$vues;
-        $query = 'SELECT DISTINCT idListe,nom,idUtilisateur FROM ListeTache WHERE idUtilisateur = :idUtilisateur OR idUtilisateur="visiteur"';
+        $query = 'SELECT DISTINCT idListe,nom,idUtilisateur FROM ListeTache ';
 
         try {
             $this->con->executeQuery($query, array(
@@ -106,29 +106,6 @@ class TacheGateway
         return $tab;
     }
 
-    public function RecupeTache(string $idListe)
-    {
-        global $rep,$vues;
-        $query = 'SELECT idTache,contenu,date,importance,isPublic FROM Tache WHERE idListe = :idListe';
-        $tab = array();
-        $toutesTaches = array();
-
-        try {
-            $this->con->executeQuery($query, array(
-                ':idListe' => array($idListe, PDO::PARAM_STR)
-            ));
-            $tab = $this->con->getResults();
-
-            foreach ($tab as $row) {
-                $toutesTaches[] = new Tache($row['idTache'], $row['contenu'], $row['date'], $row['importance'], $row['isPublic'], $idListe);
-            }
-        } catch (PDOException $e) {
-            $dVueEreur[] = $e->getMessage();
-        }
-        require($rep.$vues["erreur"]);
-        return $toutesTaches;
-    }
-
     public function RecupeTachePublic(string $idListe)
     {
         global $rep,$vues;
@@ -152,6 +129,34 @@ class TacheGateway
         return $toutesTaches;
     }
 
+    public function RecupeTache(string $idListe, string $idUtilisateur)
+    {
+        global $rep,$vues;
+        $query = 'SELECT idTache,contenu,date,importance,isPublic FROM Tache WHERE idListe = :idListe ';
+        $tab = array();
+        $toutesTaches = array();
+
+        if($idUtilisateur == $_SESSION['login']) {
+
+            try {
+                $this->con->executeQuery($query, array(
+                    ':idListe' => array($idListe, PDO::PARAM_STR)
+                ));
+                $tab = $this->con->getResults();
+
+                foreach ($tab as $row) {
+                    $toutesTaches[] = new Tache($row['idTache'], $row['contenu'], $row['date'], $row['importance'], $row['isPublic'], $idListe);
+                }
+            } catch (PDOException $e) {
+                $dVueEreur[] = $e->getMessage();
+            }
+            require($rep . $vues["erreur"]);
+        }else{
+            $toutesTaches = $this->RecupeTachePublic($idListe);
+        }
+        return $toutesTaches;
+    }
+
 
     public function recupListUtil(string $idCompte)
     {
@@ -159,6 +164,7 @@ class TacheGateway
         if($idCompte == "visiteur") {
 
             $tabList = $this->RecupeIdList();
+
             foreach ($tabList as $idList) {
                 $tache = $this->RecupeTachePublic($idList[0]);
                 /*
@@ -173,7 +179,7 @@ class TacheGateway
 
             $tabList = $this->RecupeIdListUtil($idCompte);
             foreach ($tabList as $idList) {
-                $tache = $this->RecupeTache($idList[0]);
+                $tache = $this->RecupeTache($idList[0],$idList[2]);
                 /*
                 foreach ($tache as $tacheIndivi){
                     $tacheIndivi->setContenu($tacheIndivi->getContenu().' '.$idList[2] );
