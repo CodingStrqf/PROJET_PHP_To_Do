@@ -32,7 +32,14 @@ class FrontController
 
                 if ($exist) {
                     $c = new UserController($id);                                              // connecte
-                } else  echo 'Votre login ou votre mot de passe est erroné';
+                } else  {
+                    echo 'Votre login ou votre mot de passe est erroné';
+                    echo'<form method="post">
+                        <input type="submit" value="Re essayer la connection">
+                        <input type="hidden" name="action" value="connection">
+                        </form>
+                        ';
+                }
             }
 
 
